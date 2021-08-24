@@ -12,17 +12,19 @@ class TabOne extends StatefulWidget {
 class _TabOneState extends State<TabOne> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Text("Hello from ${widget.title ?? ''}"),
-          TextButton(
-            onPressed: () => Navigator.pushNamed(context, Routes.pageOne,
-                arguments: CommonArgument(title: "This is page one example")),
-            child: Text("Go to Page One example"),
-          )
-        ],
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Text("Hello from ${widget.title ?? ''}"),
+            TextButton(
+              onPressed: () => Navigator.pushNamed(context, Routes.pageOne,
+                  arguments: CommonArgument(title: "This is page one example")),
+              child: Text("Go to Page One example"),
+            )
+          ],
+        ),
       ),
     );
   }

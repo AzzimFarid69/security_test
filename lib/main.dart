@@ -1,14 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:safe_device/safe_device.dart';
 import 'package:security_test/common/route_generator.dart';
 import 'package:security_test/models/security_model.dart';
 import 'package:security_test/screens/home_screen.dart';
+import 'package:security_test/utils/utils.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runZonedGuarded(() {
+    WidgetsFlutterBinding.ensureInitialized();
+    runApp(MyApp());
+  }, (dynamic error, dynamic stack) {
+    print(error);
+    print(stack);
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -29,30 +34,14 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    bool isJailBroken;
-    bool isRealDevice;
-    bool isOnExternalStorage;
-    bool isSafeDevice;
-
+    SecurityModel result = await Utils.safeDeviceCheck();
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    try {
-      isJailBroken = await SafeDevice.isJailBroken;
-      isRealDevice = await SafeDevice.isRealDevice;
-      isOnExternalStorage = await SafeDevice.isOnExternalStorage;
-      isSafeDevice = await SafeDevice.isSafeDevice;
-    } catch (error) {
-      print(error);
-    }
-
     setState(() {
-      _securityModel.isJailBroken = isJailBroken;
-      _securityModel.isRealDevice = isRealDevice;
-      _securityModel.isOnExternalStorage = isOnExternalStorage;
-      _securityModel.isSafeDevice = isSafeDevice;
+      _securityModel = result;
     });
   }
 

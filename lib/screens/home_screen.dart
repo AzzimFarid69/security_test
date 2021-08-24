@@ -4,8 +4,9 @@ import 'package:security_test/base/base_stateful.dart';
 import 'package:security_test/common/tab_item.dart';
 import 'package:security_test/components/drawer_list.dart';
 import 'package:security_test/models/security_model.dart';
-import 'package:security_test/screens/authentication.dart';
-import 'package:security_test/screens/expansion_tile.dart';
+import 'package:security_test/screens/authentication_screen.dart';
+import 'package:security_test/screens/device_info_screen.dart';
+import 'package:security_test/screens/expansion_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
 import 'package:security_test/screens/tab_2.dart';
 import 'package:security_test/utils/user_secure_storage.dart';
@@ -55,16 +56,22 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    init();
     _children = [
       AuthenticationScreen(
         onInit: init,
         selectedTab: selectTab,
       ),
       ExpansionScreen(),
+      DeviceInfoScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
       TabTwo(title: tabName[TabItem.pageTwo]),
     ];
-    init();
+
+    // You can let the plugin handle fetching the status and showing a dialog,
+    Utils.basicAppVersionCheck(context);
+    // or you can fetch the status and display your own dialog, or no dialog.
+    // Utils.advancedStatusCheck(context);
     super.initState();
   }
 
@@ -171,6 +178,13 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                 },
               ),
               DrawerList(
+                tabItem: TabItem.deviceInfo,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
                 tabItem: TabItem.pageOne,
                 currentTab: _currentTab,
                 onTap: () {
@@ -194,6 +208,27 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                       },
                     )
                   : Container(),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                            'isJailBroken: ${widget.securityModel.isJailBroken == null ? "Unknown" : widget.securityModel.isJailBroken ? "YES" : "NO"}'),
+                        Text(
+                            'isRealDevice: ${widget.securityModel.isRealDevice == null ? "Unknown" : widget.securityModel.isRealDevice ? "YES" : "NO"}'),
+                        Text(
+                            'isOnExternalStorage: ${widget.securityModel.isOnExternalStorage == null ? "Unknown" : widget.securityModel.isOnExternalStorage ? "YES" : "NO"}'),
+                        Text(
+                            'isSafeDevice: ${widget.securityModel.isSafeDevice == null ? "Unknown" : widget.securityModel.isSafeDevice ? "YES" : "NO"}'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         )
@@ -206,27 +241,11 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   Widget getChildView() => SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                    'isJailBroken: ${widget.securityModel.isJailBroken == null ? "Unknown" : widget.securityModel.isJailBroken ? "YES" : "NO"}'),
-                Text(
-                    'isRealDevice: ${widget.securityModel.isRealDevice == null ? "Unknown" : widget.securityModel.isRealDevice ? "YES" : "NO"}'),
-                Text(
-                    'isOnExternalStorage: ${widget.securityModel.isOnExternalStorage == null ? "Unknown" : widget.securityModel.isOnExternalStorage ? "YES" : "NO"}'),
-                Text(
-                    'isSafeDevice: ${widget.securityModel.isSafeDevice == null ? "Unknown" : widget.securityModel.isSafeDevice ? "YES" : "NO"}'),
-                loading
-                    ? Container()
-                    : !isAuthenticate
-                        ? _children[0]
-                        : _children[_currentTab.index],
-              ],
-            ),
-          ),
+          child: loading
+              ? Container()
+              : !isAuthenticate
+                  ? _children[0]
+                  : _children[_currentTab.index],
         ),
       );
 }

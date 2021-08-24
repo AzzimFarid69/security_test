@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:security_test/screens/home_screen.dart';
+import 'package:security_test/screens/network_screen.dart';
 import 'package:security_test/screens/page_1.dart';
 
 class Routes {
   static const String pageOne = '/pageOne';
+  static const String network = '/network';
 }
 
 class CommonArgument {
@@ -22,6 +24,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.pageOne:
         return MaterialPageRoute(builder: (_) => PageOne(title: args.title));
+      case Routes.network:
+        return MaterialPageRoute(builder: (_) => NetworkScreen());
       default:
         return _errorRoute();
     }
