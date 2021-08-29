@@ -39,7 +39,7 @@ class UserDeviceInfo {
       'host': build.host,
       'id': build.id,
       'manufacturer': build.manufacturer,
-      'model': build.model,
+      'model': build.model, // e.g. "Moto G (4)"
       'product': build.product,
       'supported32BitAbis': build.supported32BitAbis,
       'supported64BitAbis': build.supported64BitAbis,
@@ -47,7 +47,7 @@ class UserDeviceInfo {
       'tags': build.tags,
       'type': build.type,
       'isPhysicalDevice': build.isPhysicalDevice,
-      'androidId': build.androidId,
+      'androidId': build.androidId, // UUID on Android
       'systemFeatures': build.systemFeatures,
     };
   }
@@ -59,13 +59,13 @@ class UserDeviceInfo {
       'systemVersion': data.systemVersion,
       'model': data.model,
       'localizedModel': data.localizedModel,
-      'identifierForVendor': data.identifierForVendor,
+      'identifierForVendor': data.identifierForVendor, //UUID for iOS
       'isPhysicalDevice': data.isPhysicalDevice,
       'utsname.sysname:': data.utsname.sysname,
       'utsname.nodename:': data.utsname.nodename,
       'utsname.release:': data.utsname.release,
       'utsname.version:': data.utsname.version,
-      'utsname.machine:': data.utsname.machine,
+      'utsname.machine:': data.utsname.machine, // e.g. "iPod7,1"
     };
   }
 }

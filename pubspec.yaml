@@ -32,6 +32,7 @@ dependencies:
   quiver: ^3.0.1
 
   #security
+  encrypt: ^5.0.1
   flutter_secure_storage: ^4.2.1
   safe_device: ^1.0.7
   new_version: ^0.2.2

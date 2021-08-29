@@ -5,6 +5,7 @@ import 'package:security_test/common/tab_item.dart';
 import 'package:security_test/components/drawer_list.dart';
 import 'package:security_test/models/security_model.dart';
 import 'package:security_test/screens/authentication_screen.dart';
+import 'package:security_test/screens/cryptography_screen.dart';
 import 'package:security_test/screens/device_info_screen.dart';
 import 'package:security_test/screens/expansion_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
@@ -64,6 +65,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       ),
       ExpansionScreen(),
       DeviceInfoScreen(),
+      CryptographyScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
       TabTwo(title: tabName[TabItem.pageTwo]),
     ];
@@ -182,6 +184,13 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                 currentTab: _currentTab,
                 onTap: () {
                   selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.cryptography,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               DrawerList(
