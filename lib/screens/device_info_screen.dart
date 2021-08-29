@@ -9,7 +9,7 @@ class DeviceInfoScreen extends StatefulWidget {
 }
 
 class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
-  Map<String, dynamic> _deviceData = <String, dynamic>{};
+  DeviceInfoModel _deviceData = DeviceInfoModel();
   @override
   void initState() {
     super.initState();
@@ -17,7 +17,7 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   }
 
   Future<void> initPlatformState() async {
-    var deviceData = <String, dynamic>{};
+    var deviceData = DeviceInfoModel();
     deviceData = await UserDeviceInfo.getDeviceData();
     if (!mounted) {
       return;
@@ -33,33 +33,38 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
       child: Container(
         child: _deviceData != null
             ? Column(
-                children: _deviceData.keys.map(
-                  (String property) {
-                    return Row(
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            property,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                children: [
+                  Text(_deviceData.deviceModelFullName),
+                  Column(
+                    children: _deviceData.allInfo.keys.map(
+                      (String property) {
+                        return Row(
+                          children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                property,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                            child: Text(
-                              '${_deviceData[property]}',
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                                child: Text(
+                                  '${_deviceData.allInfo[property]}',
+                                  maxLines: 10,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ).toList(),
+                          ],
+                        );
+                      },
+                    ).toList(),
+                  )
+                ],
               )
             : null,
       ),
