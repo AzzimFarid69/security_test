@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_version/new_version.dart';
 import 'package:safe_device/safe_device.dart';
+import 'package:security_test/common/global_data.dart';
 import 'package:security_test/models/security_model.dart';
+import 'package:security_test/utils/session_timer.dart';
 
 extension StringExtension on String {
   bool get isNotNullOrEmpty => this != null && this.isNotEmpty;
@@ -47,5 +49,17 @@ class Utils {
     }
 
     return _securityModel;
+  }
+
+  static sessionConditionController({bool foreRestart: false}) {
+    if (MyGlobalData.token != null) {
+      if (foreRestart) {
+        SessionTimer.forceRestart();
+      } else if (!SessionTimer.isRunning()) {
+        SessionTimer.restart(MyGlobalData.tokenValidPeriod);
+      }
+      return;
+    }
+    SessionTimer.stop();
   }
 }

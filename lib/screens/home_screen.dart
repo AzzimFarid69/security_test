@@ -10,6 +10,7 @@ import 'package:security_test/screens/device_info_screen.dart';
 import 'package:security_test/screens/expansion_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
 import 'package:security_test/screens/tab_2.dart';
+import 'package:security_test/utils/session_timer.dart';
 import 'package:security_test/utils/user_secure_storage.dart';
 import 'package:security_test/utils/utils.dart';
 
@@ -38,9 +39,9 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
     if (isAuthenticate) {
       print("AppLifecycleState :::: $state");
       if (state == AppLifecycleState.paused) {
-        _countdownTimer = CountdownTimer(Duration(seconds: 30), Duration(seconds: 1));
+        _countdownTimer = SessionTimer.start(60);
       } else if (state == AppLifecycleState.resumed) {
-        if (_countdownTimer.remaining > Duration(seconds: 0)) {
+        if (_countdownTimer != null && _countdownTimer.remaining > Duration(seconds: 0)) {
           print("AppLifeCycleState timer didn't complete");
           //Let user continue using the app
         } else {
@@ -48,7 +49,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
           //logout user
           logout();
         }
-        _countdownTimer.cancel();
+        _countdownTimer?.cancel();
       }
     }
     super.didChangeAppLifecycleState(state);
