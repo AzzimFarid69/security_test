@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
 import 'package:security_test/base/base_stateful.dart';
+import 'package:security_test/common/constant.dart';
+import 'package:security_test/common/route_generator.dart';
 import 'package:security_test/common/tab_item.dart';
+import 'package:security_test/common/utils/session_timer.dart';
+import 'package:security_test/common/utils/user_secure_storage.dart';
+import 'package:security_test/common/utils/utils.dart';
 import 'package:security_test/components/drawer_list.dart';
 import 'package:security_test/models/security_model.dart';
 import 'package:security_test/screens/authentication_screen.dart';
@@ -10,19 +16,16 @@ import 'package:security_test/screens/device_info_screen.dart';
 import 'package:security_test/screens/expansion_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
 import 'package:security_test/screens/tab_2.dart';
-import 'package:security_test/utils/session_timer.dart';
-import 'package:security_test/utils/user_secure_storage.dart';
-import 'package:security_test/utils/utils.dart';
 
 class HomeScreen extends StatefulWidget {
-  final SecurityModel securityModel;
-  const HomeScreen({Key key, this.securityModel}) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObserver {
+  SecurityModel _securityModel = SecurityModel();
   TabItem _currentTab = TabItem.expansion;
   String title = tabName[TabItem.expansion];
   List<Widget> _children;
@@ -39,17 +42,15 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
     if (isAuthenticate) {
       print("AppLifecycleState :::: $state");
       if (state == AppLifecycleState.paused) {
-        _countdownTimer = SessionTimer.start(60);
+        _countdownTimer = SessionTimer.start(context, 10);
       } else if (state == AppLifecycleState.resumed) {
         if (_countdownTimer != null && _countdownTimer.remaining > Duration(seconds: 0)) {
           print("AppLifeCycleState timer didn't complete");
           //Let user continue using the app
         } else {
           print("AppLifeCycleState timeout!");
-          //logout user
-          logout();
         }
-        _countdownTimer?.cancel();
+        _countdownTimer = SessionTimer.stop();
       }
     }
     super.didChangeAppLifecycleState(state);
@@ -58,6 +59,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    initPlatformState();
     init();
     _children = [
       AuthenticationScreen(
@@ -85,8 +87,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   }
 
   Future init() async {
-    final secureEmail = await UserSecureStorage.getEmail();
-    final securePassword = await UserSecureStorage.getPassword();
+    final secureEmail = await UserSecureStorage.getSecureData(Constants.skEmail);
+    final securePassword = await UserSecureStorage.getSecureData(Constants.skPassword);
     if (secureEmail.isNotNullOrEmpty && securePassword.isNotNullOrEmpty) {
       setState(() {
         email = secureEmail;
@@ -106,9 +108,28 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
     }
   }
 
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    SecurityModel result = await Utils.safeDeviceCheck(context);
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _securityModel = result;
+    });
+  }
+
+  bool closeApp() {
+    SystemNavigator.pop();
+    return false;
+  }
+
   Future logout() async {
     await UserSecureStorage.deleteAll();
-    init();
+    Navigator.pushReplacementNamed(context, Routes.logout);
+    // init();
   }
 
   void selectTab(TabItem tabItem, {bool isChangeTab, bool hasUser}) {
@@ -227,13 +248,13 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                            'isJailBroken: ${widget.securityModel.isJailBroken == null ? "Unknown" : widget.securityModel.isJailBroken ? "YES" : "NO"}'),
+                            'isJailBroken: ${_securityModel.isJailBroken == null ? "Unknown" : _securityModel.isJailBroken ? "YES" : "NO"}'),
                         Text(
-                            'isRealDevice: ${widget.securityModel.isRealDevice == null ? "Unknown" : widget.securityModel.isRealDevice ? "YES" : "NO"}'),
+                            'isRealDevice: ${_securityModel.isRealDevice == null ? "Unknown" : _securityModel.isRealDevice ? "YES" : "NO"}'),
                         Text(
-                            'isOnExternalStorage: ${widget.securityModel.isOnExternalStorage == null ? "Unknown" : widget.securityModel.isOnExternalStorage ? "YES" : "NO"}'),
+                            'isOnExternalStorage: ${_securityModel.isOnExternalStorage == null ? "Unknown" : _securityModel.isOnExternalStorage ? "YES" : "NO"}'),
                         Text(
-                            'isSafeDevice: ${widget.securityModel.isSafeDevice == null ? "Unknown" : widget.securityModel.isSafeDevice ? "YES" : "NO"}'),
+                            'isSafeDevice: ${_securityModel.isSafeDevice == null ? "Unknown" : _securityModel.isSafeDevice ? "YES" : "NO"}'),
                       ],
                     ),
                   ),

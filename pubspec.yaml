@@ -38,6 +38,7 @@ dependencies:
   new_version: ^0.2.2
   device_info_plus: ^2.1.0
   network_info_plus: ^1.1.0
+  minimize_app: ^0.1.1
 
 dev_dependencies:
   flutter_test:

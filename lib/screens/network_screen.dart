@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/base/base_stateful.dart';
+import 'package:security_test/common/utils/user_network_info.dart';
 import 'package:security_test/models/network_info_model.dart';
-import 'package:security_test/utils/user_network_info.dart';
 
 class NetworkScreen extends StatefulWidget {
   const NetworkScreen({Key key}) : super(key: key);

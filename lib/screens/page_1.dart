@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/base/base_stateful.dart';
-import 'package:security_test/utils/constant.dart';
+import 'package:security_test/common/constant.dart';
 
 class PageOne extends StatefulWidget {
   final String title;

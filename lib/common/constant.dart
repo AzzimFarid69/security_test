@@ -1,6 +1,8 @@
 import 'package:security_test/models/month_model.dart';
 
 class Constants {
+  static const skEmail = 'email';
+  static const skPassword = 'password';
   static List<MonthModel> getMonthModel() => [
         MonthModel('January', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'),
         MonthModel('February', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'),

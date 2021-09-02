@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:new_version/new_version.dart';
 import 'package:safe_device/safe_device.dart';
+import 'package:security_test/common/components/custom_dialog.dart';
 import 'package:security_test/common/global_data.dart';
+import 'package:security_test/common/utils/session_timer.dart';
 import 'package:security_test/models/security_model.dart';
-import 'package:security_test/utils/session_timer.dart';
 
 extension StringExtension on String {
   bool get isNotNullOrEmpty => this != null && this.isNotEmpty;
@@ -17,6 +21,7 @@ class Utils {
   );
 
   static basicAppVersionCheck(BuildContext context) {
+    print("TEST ::: $context");
     newVersion.showAlertIfNecessary(context: context);
   }
 
@@ -35,8 +40,18 @@ class Utils {
     );
   }
 
+  static closeApp() {
+    if (Platform.isAndroid) {
+      SystemNavigator.pop();
+    } else if (Platform.isIOS) {
+      exit(0);
+      // Works but not recommended as Apple may SUSPEND THE APP because it's against Apple Human Interface guidelines to exit the app programmatically.
+      // should instead just minimize the app
+    }
+  }
+
   // Platform messages are asynchronous, so we initialize in an async method.
-  static Future<SecurityModel> safeDeviceCheck() async {
+  static Future<SecurityModel> safeDeviceCheck(BuildContext context) async {
     SecurityModel _securityModel = SecurityModel();
 
     try {
@@ -48,15 +63,26 @@ class Utils {
       print(error);
     }
 
+    if (_securityModel.isJailBroken == true) {
+      CustomDialog.generalDialog(
+        mContext: context,
+        title: "Environmental Risk!",
+        content: 'Your phone has been rooted, please exit the app and fix the risk!',
+        onProceed: closeApp,
+        proceedText: 'Exit',
+        cancelText: "Ignore for testing",
+        barrierDismissible: false,
+      );
+    }
     return _securityModel;
   }
 
-  static sessionConditionController({bool foreRestart: false}) {
+  static sessionConditionController(BuildContext context, {bool foreRestart: false}) {
     if (MyGlobalData.token != null) {
       if (foreRestart) {
-        SessionTimer.forceRestart();
+        SessionTimer.forceRestart(context);
       } else if (!SessionTimer.isRunning()) {
-        SessionTimer.restart(MyGlobalData.tokenValidPeriod);
+        SessionTimer.restart(context, MyGlobalData.tokenValidPeriod);
       }
       return;
     }

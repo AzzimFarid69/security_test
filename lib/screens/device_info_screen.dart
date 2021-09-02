@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:security_test/utils/user_device_info.dart';
+import 'package:security_test/common/utils/user_device_info.dart';
 
 class DeviceInfoScreen extends StatefulWidget {
   const DeviceInfoScreen({Key key}) : super(key: key);
@@ -34,35 +34,37 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
         child: _deviceData != null
             ? Column(
                 children: [
-                  Text(_deviceData.deviceModelFullName),
+                  Text(_deviceData.deviceModelFullName ?? ''),
                   Column(
-                    children: _deviceData.allInfo.keys.map(
-                      (String property) {
-                        return Row(
-                          children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                property,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                                child: Text(
-                                  '${_deviceData.allInfo[property]}',
-                                  maxLines: 10,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ).toList(),
+                    children: _deviceData.allInfo?.keys != null
+                        ? _deviceData.allInfo.keys.map(
+                            (String property) {
+                              return Row(
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      property,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                                      child: Text(
+                                        '${_deviceData.allInfo[property]}',
+                                        maxLines: 10,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ).toList()
+                        : [],
                   )
                 ],
               )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/common/tab_item.dart';
+import 'package:security_test/common/utils/user_secure_storage.dart';
 import 'package:security_test/components/text_form_field.dart';
-import 'package:security_test/utils/user_secure_storage.dart';
 import 'package:validators/validators.dart' as validator;
 
 class AuthenticationScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         loading = true;
       });
       _formKey.currentState?.save();
-      await UserSecureStorage.setCredentials(emailController.text, passwordController.text);
+      await UserSecureStorage.setUserCredentials(emailController.text, passwordController.text);
       setState(() {
         loading = false;
       });

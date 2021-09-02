@@ -5,9 +5,14 @@ class SecurityModel {
   bool isSafeDevice;
 
   SecurityModel({
-    this.isJailBroken = false,
-    this.isRealDevice = true,
-    this.isOnExternalStorage = false,
-    this.isSafeDevice = false,
+    this.isJailBroken,
+    this.isRealDevice,
+    this.isOnExternalStorage,
+    this.isSafeDevice,
   });
+
+  @override
+  String toString() {
+    return "SecurityModel({isJailBroken=$isJailBroken, isRealDevice=$isRealDevice, isOnExternalStorage=$isOnExternalStorage, isSafeDevice=$isSafeDevice })";
+  }
 }
