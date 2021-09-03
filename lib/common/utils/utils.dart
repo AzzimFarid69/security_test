@@ -47,6 +47,7 @@ class Utils {
       exit(0);
       // Works but not recommended as Apple may SUSPEND THE APP because it's against Apple Human Interface guidelines to exit the app programmatically.
       // should instead just minimize the app
+      // MinimizeApp.minimizeApp();
     }
   }
 

@@ -12,7 +12,7 @@ class SessionTimer {
   static CountdownTimer _sessionTimer;
   static int _sessionPeriod = 299;
 
-  static start(BuildContext context, int seconds) {
+  static start(BuildContext context, {int seconds: 299}) {
     _sessionPeriod = seconds;
     if (_sessionTimer == null) {
       print('TEST :::: timer is $_sessionPeriod seconds');
@@ -53,7 +53,7 @@ class SessionTimer {
 
   static restart(BuildContext context, int seconds) {
     stop();
-    start(context, seconds);
+    start(context, seconds: seconds);
   }
 
   static forceRestart(BuildContext context) {

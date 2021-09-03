@@ -14,6 +14,7 @@ import 'package:security_test/screens/authentication_screen.dart';
 import 'package:security_test/screens/cryptography_screen.dart';
 import 'package:security_test/screens/device_info_screen.dart';
 import 'package:security_test/screens/expansion_screen.dart';
+import 'package:security_test/screens/pemission_checker_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
 import 'package:security_test/screens/tab_2.dart';
 
@@ -42,7 +43,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
     if (isAuthenticate) {
       print("AppLifecycleState :::: $state");
       if (state == AppLifecycleState.paused) {
-        _countdownTimer = SessionTimer.start(context, 10);
+        _countdownTimer = SessionTimer.start(context);
       } else if (state == AppLifecycleState.resumed) {
         if (_countdownTimer != null && _countdownTimer.remaining > Duration(seconds: 0)) {
           print("AppLifeCycleState timer didn't complete");
@@ -69,6 +70,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       ExpansionScreen(),
       DeviceInfoScreen(),
       CryptographyScreen(),
+      PermissionCheckerScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
       TabTwo(title: tabName[TabItem.pageTwo]),
     ];
@@ -213,6 +215,13 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                 currentTab: _currentTab,
                 onTap: () {
                   selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.permission,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.permission, isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               DrawerList(
