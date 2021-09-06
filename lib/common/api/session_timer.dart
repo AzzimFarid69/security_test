@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
+import 'package:security_test/common/api/user_secure_storage.dart';
 import 'package:security_test/common/components/custom_dialog.dart';
-import 'package:security_test/common/utils/user_secure_storage.dart';
 
-import '../route_generator.dart';
+import '../utils/route_generator.dart';
 
 class SessionTimer {
   static StreamSubscription sub;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:security_test/common/tab_item.dart';
-import 'package:security_test/common/utils/user_secure_storage.dart';
-import 'package:security_test/components/text_form_field.dart';
+import 'package:security_test/common/api/user_secure_storage.dart';
+import 'package:security_test/common/components/text_form_field.dart';
+import 'package:security_test/common/utils/tab_item.dart';
 import 'package:validators/validators.dart' as validator;
 
 class AuthenticationScreen extends StatefulWidget {

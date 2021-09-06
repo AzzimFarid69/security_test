@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
 import 'package:security_test/base/base_stateful.dart';
-import 'package:security_test/common/constant.dart';
-import 'package:security_test/common/route_generator.dart';
-import 'package:security_test/common/tab_item.dart';
-import 'package:security_test/common/utils/session_timer.dart';
-import 'package:security_test/common/utils/user_secure_storage.dart';
+import 'package:security_test/common/api/session_timer.dart';
+import 'package:security_test/common/api/user_secure_storage.dart';
+import 'package:security_test/common/components/drawer_list.dart';
+import 'package:security_test/common/utils/constant.dart';
+import 'package:security_test/common/utils/route_generator.dart';
+import 'package:security_test/common/utils/tab_item.dart';
 import 'package:security_test/common/utils/utils.dart';
-import 'package:security_test/components/drawer_list.dart';
 import 'package:security_test/models/security_model.dart';
 import 'package:security_test/screens/authentication_screen.dart';
 import 'package:security_test/screens/cryptography_screen.dart';
 import 'package:security_test/screens/device_info_screen.dart';
 import 'package:security_test/screens/expansion_screen.dart';
-import 'package:security_test/screens/pemission_checker_screen.dart';
 import 'package:security_test/screens/tab_1.dart';
-import 'package:security_test/screens/tab_2.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -70,9 +68,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       ExpansionScreen(),
       DeviceInfoScreen(),
       CryptographyScreen(),
-      PermissionCheckerScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
-      TabTwo(title: tabName[TabItem.pageTwo]),
     ];
 
     // You can let the plugin handle fetching the status and showing a dialog,
@@ -218,24 +214,10 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                 },
               ),
               DrawerList(
-                tabItem: TabItem.permission,
-                currentTab: _currentTab,
-                onTap: () {
-                  selectTab(TabItem.permission, isChangeTab: true, hasUser: isAuthenticate);
-                },
-              ),
-              DrawerList(
                 tabItem: TabItem.pageOne,
                 currentTab: _currentTab,
                 onTap: () {
                   selectTab(TabItem.pageOne, isChangeTab: true, hasUser: isAuthenticate);
-                },
-              ),
-              DrawerList(
-                tabItem: TabItem.pageTwo,
-                currentTab: _currentTab,
-                onTap: () {
-                  selectTab(TabItem.pageTwo, isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               isAuthenticate

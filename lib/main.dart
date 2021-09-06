@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:security_test/common/route_generator.dart';
+import 'package:security_test/common/utils/route_generator.dart';
 import 'package:security_test/screens/home_screen.dart';
 
 void main() {

@@ -1,5 +1,6 @@
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
-import 'package:security_test/common/utils/user_device_info.dart';
+import 'package:security_test/common/api/user_device_info.dart';
 
 class DeviceInfoScreen extends StatefulWidget {
   const DeviceInfoScreen({Key key}) : super(key: key);
@@ -10,6 +11,7 @@ class DeviceInfoScreen extends StatefulWidget {
 
 class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   DeviceInfoModel _deviceData = DeviceInfoModel();
+  String _ipv4, _ipv6;
   @override
   void initState() {
     super.initState();
@@ -17,13 +19,17 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   }
 
   Future<void> initPlatformState() async {
-    var deviceData = DeviceInfoModel();
-    deviceData = await UserDeviceInfo.getDeviceData();
+    final deviceData = await UserDeviceInfo.getDeviceData();
+    final ipv4 = await Ipify.ipv4();
+    final ipv6 = await Ipify.ipv64();
+
     if (!mounted) {
       return;
     }
     setState(() {
       _deviceData = deviceData;
+      _ipv4 = ipv4;
+      _ipv6 = ipv6;
     });
   }
 
@@ -31,45 +37,46 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        child: _deviceData != null
-            ? Column(
+        padding: EdgeInsets.all(8),
+        child: _deviceData != null && _deviceData.allInfo?.keys == null
+            ? Center(child: CircularProgressIndicator())
+            : Column(
                 children: [
-                  Text(_deviceData.deviceModelFullName ?? ''),
-                  Column(
-                    children: _deviceData.allInfo?.keys != null
-                        ? _deviceData.allInfo.keys.map(
-                            (String property) {
-                              return Row(
-                                children: <Widget>[
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      property,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                                      child: Text(
-                                        '${_deviceData.allInfo[property]}',
-                                        maxLines: 10,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ).toList()
-                        : [],
-                  )
+                  buildInfo('IPV4', _ipv4 ?? ''),
+                  buildInfo('IPV4', _ipv6 ?? ''),
+                  buildInfo('Phone', _deviceData.deviceModelFullName ?? ''),
+                  SizedBox(height: 16),
+                  _deviceData.allInfo?.keys == null
+                      ? Center(child: CircularProgressIndicator())
+                      : Column(
+                          children: _deviceData.allInfo.keys.map((key) {
+                            final value = _deviceData.allInfo[key];
+
+                            return buildInfo(key, value);
+                          }).toList(),
+                        )
                 ],
-              )
-            : null,
+              ),
       ),
     );
   }
+
+  Widget buildInfo(String title, dynamic value) => Container(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                '$value',
+                maxLines: 15,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+          ],
+        ),
+      );
 }

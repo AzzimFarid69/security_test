@@ -1,6 +1,6 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
-import 'package:security_test/common/utils/cryptography_helper.dart';
+import 'package:security_test/common/api/cryptography_helper.dart';
 
 class CryptographyScreen extends StatefulWidget {
   const CryptographyScreen({Key key}) : super(key: key);

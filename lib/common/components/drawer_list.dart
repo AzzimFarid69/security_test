@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:security_test/common/tab_item.dart';
+import 'package:security_test/common/utils/tab_item.dart';
 
 class DrawerList extends StatelessWidget {
   final Function onTap;

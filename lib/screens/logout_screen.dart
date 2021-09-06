@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:security_test/common/route_generator.dart';
+import 'package:security_test/common/utils/route_generator.dart';
 
 class LogoutScreen extends StatelessWidget {
   const LogoutScreen({Key key}) : super(key: key);

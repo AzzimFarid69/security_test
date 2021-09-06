@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:security_test/common/constant.dart';
+import 'package:security_test/common/utils/constant.dart';
 
 class UserSecureStorage {
   static final _storage = FlutterSecureStorage();

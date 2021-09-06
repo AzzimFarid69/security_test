@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_version/new_version.dart';
 import 'package:safe_device/safe_device.dart';
+import 'package:security_test/common/api/session_timer.dart';
 import 'package:security_test/common/components/custom_dialog.dart';
-import 'package:security_test/common/global_data.dart';
-import 'package:security_test/common/utils/session_timer.dart';
+import 'package:security_test/common/utils/global_data.dart';
 import 'package:security_test/models/security_model.dart';
 
 extension StringExtension on String {
