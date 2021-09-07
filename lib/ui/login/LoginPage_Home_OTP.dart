@@ -126,10 +126,16 @@ class _LoginPageOTPState extends BaseStateful<LoginPageOTP> {
                         child: MyTextFormField(
                           info: _authType == "token" ? "Authenticate Code" : "OTP",
                           isRequired: true,
+                          isUnderline: true,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => FocusScope.of(context).nextFocus(),
                           onSaved: (value) => {},
-                          prefixIcon: _authType != "otp" ? Icons.password : null,
+                          prefixIcon: _authType != "otp"
+                              ? Icon(
+                                  Icons.password,
+                                  color: Theme.of(context).accentColor,
+                                )
+                              : null,
                           validator: (value) {
                             return null;
                           },

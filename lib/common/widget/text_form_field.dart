@@ -9,7 +9,7 @@ class MyTextFormField extends StatelessWidget {
   final Function(String) onSaved;
   final Function onChange;
   final Widget suffixIcon;
-  final IconData prefixIcon;
+  final Widget prefixIcon;
   final bool isPassword;
   final bool isEmail;
   final bool isPhone;
@@ -19,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
   final VoidCallback onEditingComplete;
   final ValueChanged<String> onFieldSubmitted;
   final TextInputAction textInputAction;
+  final bool isUnderline;
 
   const MyTextFormField({
     Key key,
@@ -40,6 +41,7 @@ class MyTextFormField extends StatelessWidget {
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.textInputAction,
+    this.isUnderline = false,
   }) : super(key: key);
 
   @override
@@ -72,18 +74,21 @@ class MyTextFormField extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 hintText: hintText,
-                contentPadding: EdgeInsets.all(8.0),
+                contentPadding: EdgeInsets.all(15.0),
                 suffixIcon: suffixIcon,
-                prefixIcon: Icon(
-                  prefixIcon,
-                  color: Theme.of(context).accentColor,
-                ),
-                border: UnderlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black45, width: 2.0),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.green, width: 2.0),
-                ),
+                prefixIcon: prefixIcon,
+                filled: !isUnderline,
+                fillColor: !isUnderline ? Colors.grey[200] : null,
+                border: isUnderline
+                    ? UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                      )
+                    : InputBorder.none,
+                focusedBorder: isUnderline
+                    ? UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.green, width: 2.0),
+                      )
+                    : null,
               ),
               obscureText: isPassword,
               validator: validator,
