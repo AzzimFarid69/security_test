@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/common/api/user_secure_storage.dart';
-import 'package:security_test/common/components/text_form_field.dart';
 import 'package:security_test/common/utils/tab_item.dart';
+import 'package:security_test/common/widget/text_form_field.dart';
 import 'package:validators/validators.dart' as validator;
 
 class AuthenticationScreen extends StatefulWidget {
@@ -174,6 +174,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
                           onPressed: () {},
                           child: Text(
                             'Click here to Register',

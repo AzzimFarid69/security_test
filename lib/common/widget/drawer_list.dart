@@ -20,11 +20,14 @@ class DrawerList extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           tabIcons[tabItem],
-          color: currentTab == tabItem ? Colors.black : Colors.black54,
+          color: currentTab == tabItem ? Colors.white : Colors.black87,
         ),
         title: Text(
           drawerName[tabItem],
-          style: TextStyle(fontWeight: currentTab == tabItem ? FontWeight.bold : null),
+          style: TextStyle(
+            fontWeight: currentTab == tabItem ? FontWeight.bold : null,
+            color: currentTab == tabItem ? Colors.white : null,
+          ),
         ),
         onTap: () {
           Navigator.pop(context);
@@ -32,7 +35,7 @@ class DrawerList extends StatelessWidget {
         },
         trailing: Icon(
           Icons.arrow_forward_ios_rounded,
-          color: currentTab == tabItem ? Colors.black : null,
+          color: currentTab == tabItem ? Colors.white : null,
           size: 20,
         ),
       ),

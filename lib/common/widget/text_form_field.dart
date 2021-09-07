@@ -9,6 +9,7 @@ class MyTextFormField extends StatelessWidget {
   final Function(String) onSaved;
   final Function onChange;
   final Widget suffixIcon;
+  final IconData prefixIcon;
   final bool isPassword;
   final bool isEmail;
   final bool isPhone;
@@ -29,6 +30,7 @@ class MyTextFormField extends StatelessWidget {
     this.onSaved,
     this.onChange,
     this.suffixIcon,
+    this.prefixIcon,
     this.isPassword = false,
     this.isEmail = false,
     this.isPhone = false,
@@ -43,16 +45,15 @@ class MyTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.topCenter,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: info != null,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+                padding: const EdgeInsets.only(bottom: 5.0),
                 child: Row(
                   children: [
                     Text(info ?? '', style: TextStyle(fontSize: 12)),
@@ -71,11 +72,18 @@ class MyTextFormField extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 hintText: hintText,
-                contentPadding: EdgeInsets.all(15.0),
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.grey[200],
+                contentPadding: EdgeInsets.all(8.0),
                 suffixIcon: suffixIcon,
+                prefixIcon: Icon(
+                  prefixIcon,
+                  color: Theme.of(context).accentColor,
+                ),
+                border: UnderlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.green, width: 2.0),
+                ),
               ),
               obscureText: isPassword,
               validator: validator,

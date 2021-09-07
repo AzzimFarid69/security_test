@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
 import 'package:security_test/common/api/user_secure_storage.dart';
-import 'package:security_test/common/components/custom_dialog.dart';
+import 'package:security_test/common/widget/custom_dialog.dart';
 
 import '../utils/route_generator.dart';
 

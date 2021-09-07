@@ -19,7 +19,7 @@ class _TabOneState extends State<TabOne> {
           children: [
             Text("Hello from ${widget.title ?? ''}"),
             TextButton(
-              onPressed: () => Navigator.pushNamed(context, Routes.pageOne,
+              onPressed: () => Navigator.pushNamed(context, Routes.otp,
                   arguments: CommonArgument(title: "This is page one example")),
               child: Text("Go to Page One example"),
             )
