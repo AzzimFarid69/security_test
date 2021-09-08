@@ -49,8 +49,41 @@ class CustomWidget {
     );
   }
 
-  static Widget generalListView(BuildContext context,
-      {int index, String title, String description, bool isInfo, Function onTap}) {
+  static Widget generalList(
+    BuildContext context, {
+    String title,
+    double value,
+  }) {
+    return Container(
+      color: Colors.white,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 5.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title ?? '',
+                style: TextStyle(color: Colors.black45, fontSize: 13.0),
+              ),
+              Text(value != null ? 'LKR $value' : ''),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget generalListView(
+    BuildContext context, {
+    int index,
+    String title,
+    String description,
+    bool isInfo,
+    Function onTap,
+  }) {
     return GestureDetector(
       onTap: () => onTap(index),
       child: Container(

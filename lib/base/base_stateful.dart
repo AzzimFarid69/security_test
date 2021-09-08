@@ -12,7 +12,6 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
   Widget getFloatingActionButton();
   Widget getBottomNavigation();
   Widget getChildView();
-  bool isImageHeader = false;
 
   Future<bool> _onWillPop() async {
     return backTap(context) ?? false;
@@ -29,7 +28,8 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: isImageHeader,
+          iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+          centerTitle: true,
           toolbarHeight: 70,
           flexibleSpace: Container(
             child: Column(

@@ -25,7 +25,7 @@ class SessionTimer {
         } else {
           print('TEST :::: timer is done');
           CustomDialog.generalDialog(
-            mContext: context,
+            context: context,
             title: "Session Timeout",
             content: 'Opps! your session is up. proceed logout',
             onProceed: () async {

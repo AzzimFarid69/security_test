@@ -65,7 +65,7 @@ class Utils {
 
     if (_securityModel.isJailBroken == true) {
       CustomDialog.generalDialog(
-        mContext: context,
+        context: context,
         title: "Environmental Risk!",
         content: 'Your phone has been rooted, please exit the app and fix the risk!',
         onProceed: closeApp,

@@ -12,9 +12,6 @@ class PageOne extends StatefulWidget {
 
 class _PageOneState extends BaseStateful<PageOne> {
   @override
-  bool get isImageHeader => true;
-
-  @override
   List<Widget> getAction() => null;
 
   @override
