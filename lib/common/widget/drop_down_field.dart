@@ -5,7 +5,7 @@ class MyDropDownField extends StatelessWidget {
   final String initialValue;
   final String hintText;
   final String Function(String) validator;
-  final Function(String) onChanged;
+  final Function onChanged;
   final bool isPassword;
   final bool isEmail;
   final bool isPhone;

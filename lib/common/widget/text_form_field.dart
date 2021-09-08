@@ -74,7 +74,7 @@ class MyTextFormField extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 hintText: hintText,
-                contentPadding: EdgeInsets.all(15.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
                 filled: !isUnderline,

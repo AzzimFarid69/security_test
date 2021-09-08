@@ -6,10 +6,10 @@ import 'package:security_test/common/utils/custom_colors.dart';
 abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
   String getAppTitle();
   List<Widget> getAction();
-  Widget getChildView();
-  Widget getBottomNavigation();
   Widget getDrawer();
   Widget getFloatingActionButton();
+  Widget getBottomNavigation();
+  Widget getChildView();
   bool isImageHeader = false;
 
   Future<bool> _onWillPop() async {
