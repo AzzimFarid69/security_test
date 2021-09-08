@@ -1,9 +1,10 @@
-class MonthModel {
+class GeneralModel {
   final String name;
   final String description;
+  final bool isBool;
 
-  MonthModel(this.name, this.description);
+  GeneralModel({this.name, this.description, this.isBool = false});
 
   @override
-  String toString() => "MonthModel(name='$name', description='$description)";
+  String toString() => "GeneralModel(name='$name', description='$description, isBool=$isBool)";
 }

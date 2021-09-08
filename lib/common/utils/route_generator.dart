@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:security_test/screens/home_screen.dart';
-import 'package:security_test/screens/logout_screen.dart';
-import 'package:security_test/ui/login/LoginPage_Home_OTP.dart';
+import 'package:security_test/ui/OneTimeTransfer.dart';
+import 'package:security_test/ui/home_screen.dart';
+import 'package:security_test/ui/logout_screen.dart';
 
 class Routes {
   static const String home = '/';
@@ -24,7 +24,7 @@ class RouteGenerator {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.otp:
-        return MaterialPageRoute(builder: (_) => LoginPageOTP());
+        return MaterialPageRoute(builder: (_) => OneTimeTransfer());
       case Routes.logout:
         return MaterialPageRoute(builder: (_) => LogoutScreen());
       default:

@@ -48,4 +48,41 @@ class CustomWidget {
       ],
     );
   }
+
+  static Widget generalListView(BuildContext context,
+      {int index, String title, String description, bool isInfo, Function onTap}) {
+    return GestureDetector(
+      onTap: () => onTap(index),
+      child: Container(
+        color: Colors.white,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  title ?? '',
+                  style: TextStyle(color: Colors.black45, fontSize: 13.0),
+                ),
+                Visibility(
+                  visible: isInfo,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      Icons.info_outline,
+                      color: Theme.of(context).accentColor,
+                      size: 15.0,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Text(description ?? ''),
+          ],
+        ),
+      ),
+    );
+  }
 }

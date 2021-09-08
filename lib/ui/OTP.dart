@@ -5,30 +5,38 @@ import 'package:security_test/common/widget/text_form_field.dart';
 
 class OTPTemplate extends StatefulWidget {
   final TextEditingController tec;
-  final String authType;
-  final String otpType;
-  final Function handleAuthType;
-  final Function handleOtpType;
-  final Function handleRequestOTP;
-  const OTPTemplate(
-      {Key key,
-      this.tec,
-      this.authType,
-      this.otpType,
-      this.handleAuthType,
-      this.handleOtpType,
-      this.handleRequestOTP})
-      : super(key: key);
+  const OTPTemplate({Key key, this.tec}) : super(key: key);
 
   @override
   _OTPTemplateState createState() => _OTPTemplateState();
 }
 
 class _OTPTemplateState extends State<OTPTemplate> {
+  String _authType;
+  String _otpType;
+
+  @override
+  void initState() {
+    _authType = "token";
+    _otpType = "sms";
+    super.initState();
+  }
+
+  void handleAuthType(String value) {
+    setState(() => _authType = value);
+  }
+
+  void handleOtpType(String value) {
+    setState(() => _otpType = value);
+  }
+
+  void handleRequestOTP() {
+    print('AUTH TYPE : $_authType, OTP TYPE: $_otpType');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15.0),
       width: MediaQuery.of(context).size.width,
       decoration: CustomWidget.buildBoxConstrain(),
       child: Column(
@@ -51,7 +59,7 @@ class _OTPTemplateState extends State<OTPTemplate> {
               children: [
                 MyDropDownField(
                   info: "Authentication",
-                  initialValue: widget.authType,
+                  initialValue: _authType,
                   isRequired: true,
                   dropDownMenuItem: [
                     DropdownMenuItem(
@@ -63,23 +71,23 @@ class _OTPTemplateState extends State<OTPTemplate> {
                       value: 'otp',
                     )
                   ],
-                  onChanged: widget.handleAuthType,
+                  onChanged: handleAuthType,
                 ),
                 Visibility(
-                  visible: widget.authType == "otp",
+                  visible: _authType == "otp",
                   child: Row(
                     children: [
                       CustomWidget.generalRadioButton(
                         title: "SMS",
                         value: "sms",
-                        groupValue: widget.otpType,
-                        onChange: widget.handleOtpType,
+                        groupValue: _otpType,
+                        onChange: handleOtpType,
                       ),
                       CustomWidget.generalRadioButton(
                         title: "EMAIL",
                         value: "email",
-                        groupValue: widget.otpType,
-                        onChange: widget.handleOtpType,
+                        groupValue: _otpType,
+                        onChange: handleOtpType,
                       ),
                     ],
                   ),
@@ -91,13 +99,13 @@ class _OTPTemplateState extends State<OTPTemplate> {
                     Flexible(
                       child: MyTextFormField(
                         controller: widget.tec,
-                        info: widget.authType == "token" ? "Authenticate Code" : "OTP",
+                        info: _authType == "token" ? "Authenticate Code" : "OTP",
                         isRequired: true,
                         isUnderline: true,
                         textInputAction: TextInputAction.next,
                         onEditingComplete: () => FocusScope.of(context).nextFocus(),
                         onSaved: (value) => {},
-                        prefixIcon: widget.authType != "otp"
+                        prefixIcon: _authType != "otp"
                             ? Icon(
                                 Icons.password,
                                 color: Theme.of(context).accentColor,
@@ -109,12 +117,12 @@ class _OTPTemplateState extends State<OTPTemplate> {
                       ),
                     ),
                     Visibility(
-                      visible: widget.authType == "otp",
+                      visible: _authType == "otp",
                       child: CustomWidget.generalButton(
                         context,
                         title: "REQUEST OTP",
                         border: BorderRadius.circular(8),
-                        onPress: widget.handleRequestOTP,
+                        onPress: () => handleRequestOTP(),
                       ),
                     ),
                   ],

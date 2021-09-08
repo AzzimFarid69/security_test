@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:security_test/common/utils/custom_colors.dart';
+import 'package:security_test/common/utils/utils.dart';
 
 abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
   String getAppTitle();
+  String getAppSubtitle();
   List<Widget> getAction();
   Widget getDrawer();
   Widget getFloatingActionButton();
@@ -52,18 +54,32 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
           child: Column(
             children: [
               Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(12.0),
-                child: Text(
-                  getAppTitle() ?? '',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
-              ),
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        getAppTitle() ?? '',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ),
+                      Visibility(
+                        visible: getAppSubtitle().isNotNullOrEmpty,
+                        child: Text(
+                          getAppSubtitle() ?? '',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Theme.of(context).accentColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
               getChildView(),
             ],
           ),

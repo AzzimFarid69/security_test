@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:security_test/common/utils/custom_colors.dart';
 import 'package:security_test/common/utils/route_generator.dart';
-import 'package:security_test/screens/home_screen.dart';
+import 'package:security_test/ui/home_screen.dart';
 
 void main() {
   runZonedGuarded(() {

@@ -21,13 +21,8 @@ class _TabOneState extends State<TabOne> {
             TextButton(
               onPressed: () => Navigator.pushNamed(context, Routes.otp,
                   arguments: CommonArgument(title: "This is page one example")),
-              child: Text("Go to OTP Template"),
+              child: Text("Go to OTP & Confirmation Template"),
             ),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(context, Routes.otp,
-                  arguments: CommonArgument(title: "This is page one example")),
-              child: Text("Go to Confirmation Template"),
-            )
           ],
         ),
       ),

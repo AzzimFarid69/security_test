@@ -21,6 +21,9 @@ class _PageOneState extends BaseStateful<PageOne> {
   String getAppTitle() => widget.title ?? "Page One Example";
 
   @override
+  String getAppSubtitle() => null;
+
+  @override
   Widget getBottomNavigation() => null;
 
   @override

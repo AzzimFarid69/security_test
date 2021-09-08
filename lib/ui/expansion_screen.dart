@@ -10,7 +10,7 @@ class ExpansionScreen extends StatefulWidget {
 }
 
 class _ExpansionScreenState extends State<ExpansionScreen> {
-  List<MonthModel> monthModel;
+  List<GeneralModel> monthModel;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _ExpansionScreenState extends State<ExpansionScreen> {
     );
   }
 
-  Widget _buildPlayerModelList(MonthModel items) {
+  Widget _buildPlayerModelList(GeneralModel items) {
     return Card(
       child: ExpansionTile(
         key: UniqueKey(),
