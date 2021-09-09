@@ -48,39 +48,37 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
           actions: getAction(),
         ),
         drawer: getDrawer(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        getAppTitle() ?? '',
+        body: Column(
+          children: [
+            Container(
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      getAppTitle() ?? '',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    Visibility(
+                      visible: getAppSubtitle().isNotNullOrEmpty,
+                      child: Text(
+                        getAppSubtitle() ?? '',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18.0,
                           color: Theme.of(context).accentColor,
                         ),
                       ),
-                      Visibility(
-                        visible: getAppSubtitle().isNotNullOrEmpty,
-                        child: Text(
-                          getAppSubtitle() ?? '',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Theme.of(context).accentColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-              getChildView(),
-            ],
-          ),
+                    ),
+                  ],
+                )),
+            Expanded(child: getChildView()),
+          ],
         ),
         backgroundColor: CustomColors.background,
         bottomNavigationBar: getBottomNavigation(),

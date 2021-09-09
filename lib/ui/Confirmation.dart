@@ -3,8 +3,11 @@ import 'package:security_test/common/widget/custom_dialog.dart';
 import 'package:security_test/common/widget/custom_widget.dart';
 import 'package:security_test/models/month_model.dart';
 
+import 'OTP.dart';
+
 class Confirmation extends StatefulWidget {
-  const Confirmation({Key key}) : super(key: key);
+  final TextEditingController tec;
+  const Confirmation({Key key, this.tec}) : super(key: key);
 
   @override
   _ConfirmationState createState() => _ConfirmationState();
@@ -52,19 +55,24 @@ class _ConfirmationState extends State<Confirmation> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: test.asMap().entries.map((entry) {
-                int idx = entry.key;
-                GeneralModel value = entry.value;
-                return CustomWidget.generalListView(
-                  context,
-                  index: idx,
-                  title: value.name,
-                  description: value.description,
-                  isInfo: value.isBool,
-                  onTap: onListClick,
-                );
-              }).toList(),
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: test.asMap().entries.map((entry) {
+                    int idx = entry.key;
+                    GeneralModel value = entry.value;
+                    return CustomWidget.generalListView(
+                      context,
+                      index: idx,
+                      title: value.name,
+                      description: value.description,
+                      isInfo: value.isBool,
+                      onTap: onListClick,
+                    );
+                  }).toList(),
+                ),
+                OTPTemplate(tec: widget.tec),
+              ],
             ),
           ),
         ],
