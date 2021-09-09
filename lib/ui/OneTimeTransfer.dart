@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/base/base_stateful.dart';
+import 'package:security_test/common/utils/route_generator.dart';
 import 'package:security_test/common/widget/custom_widget.dart';
 import 'package:security_test/ui/Confirmation.dart';
 import 'package:security_test/ui/OTP.dart';
@@ -37,7 +38,7 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
         context,
         title: 'CONFIRM',
         onPress: () {
-          // Navigator.pushNamed(context, Routes.acknowledge);
+          Navigator.pushNamed(context, Routes.acknowledge);
           print('code: ${_tec.text}');
         },
       ),
