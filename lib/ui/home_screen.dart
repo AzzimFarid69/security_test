@@ -25,7 +25,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends BaseStateful<HomeScreen>
+    with WidgetsBindingObserver {
   SecurityModel _securityModel = SecurityModel();
   TabItem _currentTab = TabItem.expansion;
   String title = tabName[TabItem.expansion];
@@ -45,7 +46,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       if (state == AppLifecycleState.paused) {
         _countdownTimer = SessionTimer.start(context);
       } else if (state == AppLifecycleState.resumed) {
-        if (_countdownTimer != null && _countdownTimer.remaining > Duration(seconds: 0)) {
+        if (_countdownTimer != null &&
+            _countdownTimer.remaining > Duration(seconds: 0)) {
           print("AppLifeCycleState timer didn't complete");
           //Let user continue using the app
         } else {
@@ -87,8 +89,10 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   }
 
   Future init() async {
-    final secureEmail = await UserSecureStorage.getSecureData(Constants.skEmail);
-    final securePassword = await UserSecureStorage.getSecureData(Constants.skPassword);
+    final secureEmail =
+        await UserSecureStorage.getSecureData(Constants.skEmail);
+    final securePassword =
+        await UserSecureStorage.getSecureData(Constants.skPassword);
     if (secureEmail.isNotNullOrEmpty && securePassword.isNotNullOrEmpty) {
       setState(() {
         email = secureEmail;
@@ -193,7 +197,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                       tabItem: TabItem.signIn,
                       currentTab: _currentTab,
                       onTap: () {
-                        selectTab(TabItem.signIn, isChangeTab: false, hasUser: isAuthenticate);
+                        selectTab(TabItem.signIn,
+                            isChangeTab: false, hasUser: isAuthenticate);
                       },
                     )
                   : Container(),
@@ -201,28 +206,40 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                 tabItem: TabItem.expansion,
                 currentTab: _currentTab,
                 onTap: () {
-                  selectTab(TabItem.expansion, isChangeTab: true, hasUser: isAuthenticate);
+                  selectTab(TabItem.expansion,
+                      isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               DrawerList(
                 tabItem: TabItem.deviceInfo,
                 currentTab: _currentTab,
                 onTap: () {
-                  selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
+                  selectTab(TabItem.deviceInfo,
+                      isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               DrawerList(
                 tabItem: TabItem.cryptography,
                 currentTab: _currentTab,
                 onTap: () {
-                  selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
+                  selectTab(TabItem.cryptography,
+                      isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               DrawerList(
                 tabItem: TabItem.pageOne,
                 currentTab: _currentTab,
                 onTap: () {
-                  selectTab(TabItem.pageOne, isChangeTab: true, hasUser: isAuthenticate);
+                  selectTab(TabItem.pageOne,
+                      isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.auth,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.auth,
+                      isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
               isAuthenticate
@@ -231,7 +248,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                       currentTab: _currentTab,
                       onTap: () {
                         logout();
-                        selectTab(TabItem.signIn, isChangeTab: true, hasUser: isAuthenticate);
+                        selectTab(TabItem.signIn,
+                            isChangeTab: true, hasUser: isAuthenticate);
                       },
                     )
                   : Container(),

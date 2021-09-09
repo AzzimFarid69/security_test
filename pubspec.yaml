@@ -41,6 +41,15 @@ dependencies:
   validators: ^3.0.0
   quiver: ^3.0.1
 
+  permission_handler: ^8.1.4+2
+  connectivity: ^3.0.6
+  http: ^0.13.3
+  local_auth: ^1.1.7
+  font_awesome_flutter: ^9.1.0
+  flutter_rounded_date_picker: ^2.0.2
+  date_time_picker: ^2.1.0
+  fragment_navigate: ^1.1.1+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
