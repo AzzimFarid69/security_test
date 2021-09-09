@@ -12,7 +12,7 @@ class Confirmation extends StatefulWidget {
 
 class _ConfirmationState extends State<Confirmation> {
   var test = [
-    GeneralModel(name: 'Fee & Charges', description: 'LKR 100.00', isBool: true, feesAndCharges: [
+    GeneralModel(name: 'Fee And Charges', description: 'LKR 100.00', isBool: true, feesAndCharges: [
       FeesAndCharges(item: "Lankapay - Online", value: 50),
       FeesAndCharges(item: "Something else - Online", value: 50),
     ]),

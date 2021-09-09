@@ -25,18 +25,16 @@ class _PageOneState extends BaseStateful<PageOne> {
 
   @override
   Widget getChildView() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: Constants.getMonthModel()
-              .map((item) => ListTile(
-                    title: Text(
-                      item.name,
-                    ),
-                  ))
-              .toList(),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: Constants.getMonthModel()
+            .map((item) => ListTile(
+                  title: Text(
+                    item.name,
+                  ),
+                ))
+            .toList(),
       ),
     );
   }

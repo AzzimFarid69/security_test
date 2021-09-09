@@ -15,7 +15,7 @@ class CustomWidget {
           title ?? '',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: fontSize,
+            fontSize: fontSize ?? 15.0,
             color: Colors.white,
           ),
         ),
@@ -81,6 +81,7 @@ class CustomWidget {
     int index,
     String title,
     String description,
+    String status,
     bool isInfo,
     Function onTap,
   }) {
@@ -112,10 +113,26 @@ class CustomWidget {
                 )
               ],
             ),
-            Text(description ?? ''),
+            Text(
+              description ?? '',
+              style: TextStyle(
+                  color: setTextColor(status), fontWeight: status != null ? FontWeight.bold : null),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  static Color setTextColor(String status) {
+    if (status != null) {
+      switch (status) {
+        case 'success':
+          return Colors.green;
+        default:
+          return null;
+      }
+    } else
+      return null;
   }
 }

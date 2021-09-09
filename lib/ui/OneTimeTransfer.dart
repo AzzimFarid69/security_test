@@ -37,25 +37,22 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
         context,
         title: 'CONFIRM',
         onPress: () {
+          // Navigator.pushNamed(context, Routes.acknowledge);
           print('code: ${_tec.text}');
         },
-        fontSize: 18,
-        width: MediaQuery.of(context).size.width / 3,
       ),
     );
   }
 
   @override
   Widget getChildView() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            Confirmation(),
-            OTPTemplate(tec: _tec),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          Confirmation(),
+          OTPTemplate(tec: _tec),
+        ],
       ),
     );
   }

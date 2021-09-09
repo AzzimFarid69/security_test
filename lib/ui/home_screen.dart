@@ -172,12 +172,12 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          width: 80,
+                          width: 150,
                           height: 80,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.asset('assets/ic_launcher.png').image,
+                              fit: BoxFit.fitWidth,
+                              image: Image.asset('assets/logo.png').image,
                             ),
                           ),
                         ),
@@ -265,14 +265,12 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   Widget getFloatingActionButton() => null;
 
   @override
-  Widget getChildView() => SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: loading
-              ? Container()
-              : !isAuthenticate
-                  ? _children[0]
-                  : _children[_currentTab.index],
-        ),
+  Widget getChildView() => Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: loading
+            ? Container()
+            : !isAuthenticate
+                ? _children[0]
+                : _children[_currentTab.index],
       );
 }

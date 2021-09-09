@@ -13,9 +13,7 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
   Widget getBottomNavigation();
   Widget getChildView();
 
-  Future<bool> _onWillPop() async {
-    return backTap(context) ?? false;
-  }
+  Future<bool> _onWillPop() async => backTap(context) ?? false;
 
   bool backTap(BuildContext context) {
     Navigator.pop(context);
@@ -38,7 +36,7 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: buildHeader(),
+                  child: Image.asset('assets/logo.png', height: 45.0),
                 ),
                 SizedBox(
                   child: Container(color: Theme.of(context).accentColor),
@@ -88,13 +86,6 @@ abstract class BaseStateful<T extends StatefulWidget> extends State<T> {
         bottomNavigationBar: getBottomNavigation(),
         floatingActionButton: getFloatingActionButton(),
       ),
-    );
-  }
-
-  Widget buildHeader() {
-    return Image.asset(
-      'assets/logo.png',
-      height: 45.0,
     );
   }
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:security_test/ui/Acknowledgement.dart';
 import 'package:security_test/ui/OneTimeTransfer.dart';
 import 'package:security_test/ui/home_screen.dart';
 import 'package:security_test/ui/logout_screen.dart';
 
 class Routes {
   static const String home = '/';
-  static const String otp = '/pageOne';
+  static const String otp = '/otp';
+  static const String acknowledge = '/acknowledge';
   static const String logout = '/logout';
 }
 
@@ -25,6 +27,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.otp:
         return MaterialPageRoute(builder: (_) => OneTimeTransfer());
+      case Routes.acknowledge:
+        return MaterialPageRoute(builder: (_) => Acknowledgement());
       case Routes.logout:
         return MaterialPageRoute(builder: (_) => LogoutScreen());
       default:
