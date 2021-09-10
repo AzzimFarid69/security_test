@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:security_test/models/month_model.dart';
 import 'package:security_test/ui/Acknowledgement.dart';
 import 'package:security_test/ui/OneTimeTransfer.dart';
 import 'package:security_test/ui/home_screen.dart';
@@ -14,21 +15,28 @@ class Routes {
 
 class CommonArgument {
   final String title;
+  final List<GeneralModel> generalModel;
 
-  CommonArgument({this.title});
+  CommonArgument({
+    this.title,
+    this.generalModel,
+  });
 }
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     //Getting arguments passed in while calling Navigator.pushNamed
-    // final args = settings.arguments as CommonArgument;
+    final args = settings.arguments as CommonArgument;
     switch (settings.name) {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.otp:
         return MaterialPageRoute(builder: (_) => OneTimeTransfer());
       case Routes.acknowledge:
-        return MaterialPageRoute(builder: (_) => Acknowledgement());
+        return MaterialPageRoute(
+            builder: (_) => Acknowledgement(
+                  model: args.generalModel,
+                ));
       case Routes.logout:
         return MaterialPageRoute(builder: (_) => LogoutScreen());
       default:

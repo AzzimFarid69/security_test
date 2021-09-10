@@ -35,27 +35,29 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      child: _deviceData != null && _deviceData.allInfo?.keys == null
-          ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                buildInfo('IPV4', _ipv4 ?? ''),
-                buildInfo('IPV4', _ipv6 ?? ''),
-                buildInfo('Phone', _deviceData.deviceModelFullName ?? ''),
-                SizedBox(height: 16),
-                _deviceData.allInfo?.keys == null
-                    ? Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: _deviceData.allInfo.keys.map((key) {
-                          final value = _deviceData.allInfo[key];
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: _deviceData != null && _deviceData.allInfo?.keys == null
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  buildInfo('IPV4', _ipv4 ?? ''),
+                  buildInfo('IPV4', _ipv6 ?? ''),
+                  buildInfo('Phone', _deviceData.deviceModelFullName ?? ''),
+                  SizedBox(height: 16),
+                  _deviceData.allInfo?.keys == null
+                      ? Center(child: CircularProgressIndicator())
+                      : Column(
+                          children: _deviceData.allInfo.keys.map((key) {
+                            final value = _deviceData.allInfo[key];
 
-                          return buildInfo(key, value);
-                        }).toList(),
-                      )
-              ],
-            ),
+                            return buildInfo(key, value);
+                          }).toList(),
+                        )
+                ],
+              ),
+      ),
     );
   }
 
