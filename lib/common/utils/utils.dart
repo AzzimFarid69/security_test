@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:new_version/new_version.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:security_test/common/api/session_timer.dart';
@@ -11,9 +12,21 @@ import 'package:security_test/models/security_model.dart';
 
 extension StringExtension on String {
   bool get isNotNullOrEmpty => this != null && this.isNotEmpty;
+  String get currencyFormat {
+    try {
+      String cleanText = this.replaceAll(RegExp("[^0-9]"), "");
+      double mValue = double.parse(cleanText);
+      mValue = mValue / 100;
+      return Utils.currFormat.format(mValue);
+    } catch (e) {
+      return "0.00";
+    }
+  }
 }
 
 class Utils {
+  static final currFormat = new NumberFormat("#,##0.00");
+
   // Instantiate NewVersion manager object (Using GCP Console app as example)
   static final newVersion = NewVersion(
     iOSId: 'com.google.Vespa',

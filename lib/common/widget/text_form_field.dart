@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:security_test/common/utils/utils.dart';
 
-class MyTextFormField extends StatelessWidget {
-  final TextEditingController controller;
-  final String info;
+class MyTextFormField extends StatefulWidget {
+  TextEditingController controller;
+  final String labelText;
   final String initialValue;
   final String hintText;
   final String Function(String) validator;
   final Function(String) onSaved;
-  final Function onChange;
+  final Function(String) onChange;
   final Widget suffixIcon;
   final Widget prefixIcon;
   final bool isPassword;
@@ -16,15 +18,23 @@ class MyTextFormField extends StatelessWidget {
   final bool isNumeric;
   final bool isRequired;
   final bool isMultiLine;
+  final bool isCurrency;
+  final bool allCaps;
+  final bool isClearable;
+  final bool isFDRemark;
+  final bool isPasswordToggle;
+  final bool allowSpacing;
+  final bool enableInteractiveSelection;
+  final int maxLength;
   final VoidCallback onEditingComplete;
   final ValueChanged<String> onFieldSubmitted;
   final TextInputAction textInputAction;
   final bool isUnderline;
 
-  const MyTextFormField({
+  MyTextFormField({
     Key key,
     this.controller,
-    this.info,
+    this.labelText,
     this.initialValue,
     this.hintText,
     this.validator,
@@ -38,14 +48,117 @@ class MyTextFormField extends StatelessWidget {
     this.isNumeric = false,
     this.isRequired = false,
     this.isMultiLine = false,
+    this.isCurrency = false,
+    this.allCaps = false,
+    this.isClearable = false,
+    this.isFDRemark = false,
+    this.isPasswordToggle = false,
+    this.allowSpacing = false,
+    this.enableInteractiveSelection = true,
+    this.maxLength,
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.textInputAction,
-    this.isUnderline = false,
+    this.isUnderline = true,
   }) : super(key: key);
+
+  set text(String text) {
+    if (controller != null) {
+      controller.text = text;
+    }
+  }
+
+  String get text {
+    if (controller != null) {
+      if (isNumeric && isCurrency)
+        return controller.text.replaceAll(",", "");
+      else
+        return controller.text;
+    } else {
+      return "";
+    }
+  }
+
+  void clearText() {
+    controller?.clear();
+  }
+
+  @override
+  _MyTextFormFieldState createState() => _MyTextFormFieldState(controller, isPassword);
+}
+
+class _MyTextFormFieldState extends State<MyTextFormField> {
+  TextEditingController _controller;
+  bool _isPassword;
+  _MyTextFormFieldState(this._controller, this._isPassword);
+
+  Future<Null> onTextChanged(String text) async {
+    setState(() {
+      if (widget.allCaps) {
+        if (widget.controller != null) {
+          widget.controller.value = TextEditingValue(
+            text: _controller.text.toUpperCase(),
+            selection: widget.controller.selection,
+          );
+        }
+      }
+
+      if (widget.isNumeric && widget.isCurrency) {
+        if (_controller != null && _controller.text.isNotEmpty) {
+          String result = _controller.text.currencyFormat;
+          widget.controller.value = TextEditingValue(
+            text: result,
+            selection: TextSelection.fromPosition(TextPosition(offset: result.length)),
+          );
+        }
+      }
+    });
+
+    if (widget.onChange != null) {
+      widget.onChange(text);
+    }
+  }
+
+  void toggleShowPassword() {
+    setState(() {
+      _isPassword = !_isPassword;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isPassword = widget.isPassword ?? false;
+    widget.controller = widget.controller ?? new TextEditingController();
+    _controller = widget.controller ?? new TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    String regExp = "[a-zA-Z0-9,-.@_ ]";
+
+    if (widget.isNumeric) {
+      if (widget.allowSpacing) {
+        regExp = "[0-9. ]";
+      } else {
+        regExp = "[0-9.]";
+      }
+    } else if (widget.isFDRemark) {
+      regExp = "[a-zA-Z0-9,-.@ ]";
+    } else {
+      if (widget.allowSpacing) {
+        regExp = "[a-zA-Z0-9,-.@_ ]";
+      } else {
+        regExp = "[a-zA-Z0-9,-.@_]";
+      }
+    }
+
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -53,15 +166,15 @@ class MyTextFormField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-              visible: info != null,
+              visible: widget.labelText != null,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
                 child: Row(
                   children: [
-                    Text(info ?? '', style: TextStyle(fontSize: 12)),
+                    Text(widget.labelText ?? '', style: TextStyle(fontSize: 12)),
                     SizedBox(width: 4),
                     Text(
-                      isRequired ? "*" : "",
+                      widget.isRequired ? "*" : "",
                       style: TextStyle(color: Colors.red, fontSize: 12),
                     ),
                   ],
@@ -69,45 +182,63 @@ class MyTextFormField extends StatelessWidget {
               ),
             ),
             TextFormField(
-              controller: controller,
-              initialValue: initialValue != null && controller == null ? initialValue : null,
+              controller: widget.controller,
+              initialValue: widget.initialValue != null && widget.controller == null
+                  ? widget.initialValue
+                  : null,
               autovalidateMode: AutovalidateMode.onUserInteraction,
+              enableInteractiveSelection: widget.enableInteractiveSelection,
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(regExp))],
               decoration: InputDecoration(
-                hintText: hintText,
+                hintText: widget.hintText,
                 contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-                suffixIcon: suffixIcon,
-                prefixIcon: prefixIcon,
-                filled: !isUnderline,
-                fillColor: !isUnderline ? Colors.grey[200] : null,
-                border: isUnderline
+                suffixIcon: widget.isClearable &&
+                        widget.controller != null &&
+                        widget.controller.text.isNotEmpty
+                    ? IconButton(
+                        onPressed: () => widget.controller?.clear(),
+                        icon: Icon(Icons.clear, size: 20),
+                      )
+                    : widget.isPasswordToggle
+                        ? IconButton(
+                            onPressed: () => toggleShowPassword(),
+                            icon: Icon(_isPassword ? Icons.visibility : Icons.visibility_off),
+                          )
+                        : widget.suffixIcon,
+                prefixIcon: widget.prefixIcon,
+                filled: !widget.isUnderline,
+                fillColor: !widget.isUnderline ? Colors.grey[200] : null,
+                border: widget.isUnderline
                     ? UnderlineInputBorder(
                         borderSide: const BorderSide(color: Colors.black45, width: 2.0),
                       )
                     : InputBorder.none,
-                focusedBorder: isUnderline
+                focusedBorder: widget.isUnderline
                     ? UnderlineInputBorder(
                         borderSide: const BorderSide(color: Colors.green, width: 2.0),
                       )
                     : null,
               ),
-              obscureText: isPassword,
-              validator: validator,
-              onSaved: onSaved,
-              onChanged: onChange,
-              keyboardType: isMultiLine
+              cursorColor: Colors.green,
+              obscureText: _isPassword,
+              validator: widget.validator,
+              onSaved: widget.onSaved,
+              onChanged: onTextChanged,
+              keyboardType: widget.isMultiLine
                   ? TextInputType.multiline
-                  : isPhone
+                  : widget.isPhone
                       ? TextInputType.phone
-                      : isNumeric
+                      : widget.isNumeric
                           ? TextInputType.number
-                          : isEmail
+                          : widget.isEmail
                               ? TextInputType.emailAddress
                               : TextInputType.text,
-              maxLines: isMultiLine && !isPassword ? null : 1,
-              minLines: isMultiLine ? 3 : null,
-              textInputAction: textInputAction,
-              onEditingComplete: onEditingComplete,
-              onFieldSubmitted: onFieldSubmitted,
+              maxLines: widget.isMultiLine && _isPassword == false ? null : 1,
+              minLines: widget.isMultiLine ? 3 : null,
+              maxLength: widget.maxLength,
+              textInputAction: widget.textInputAction,
+              onEditingComplete: widget.onEditingComplete,
+              onFieldSubmitted: widget.onFieldSubmitted,
             ),
           ],
         ),

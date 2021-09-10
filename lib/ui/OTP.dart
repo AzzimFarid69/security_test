@@ -17,9 +17,10 @@ class _OTPTemplateState extends State<OTPTemplate> {
 
   @override
   void initState() {
+    super.initState();
     _authType = "token";
     _otpType = "sms";
-    super.initState();
+    widget.tec.text = "1234";
   }
 
   void handleAuthType(String value) {
@@ -99,12 +100,12 @@ class _OTPTemplateState extends State<OTPTemplate> {
                     Flexible(
                       child: MyTextFormField(
                         controller: widget.tec,
-                        info: _authType == "token" ? "Authenticate Code" : "OTP",
+                        labelText: _authType == "token" ? "Authenticate Code" : "OTP",
                         isRequired: true,
-                        isUnderline: true,
+                        isPassword: true,
+                        isNumeric: true,
                         textInputAction: TextInputAction.next,
                         onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                        onSaved: (value) => {},
                         prefixIcon: _authType != "otp"
                             ? Icon(
                                 Icons.password,
@@ -112,6 +113,9 @@ class _OTPTemplateState extends State<OTPTemplate> {
                               )
                             : null,
                         validator: (value) {
+                          if (value != null && value.isEmpty) {
+                            return "Cannot be empty";
+                          }
                           return null;
                         },
                       ),
