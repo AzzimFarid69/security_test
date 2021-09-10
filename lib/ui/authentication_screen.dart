@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:security_test/common/api/user_secure_storage.dart';
 import 'package:security_test/common/utils/tab_item.dart';
 import 'package:security_test/common/widget/text_form_field.dart';
@@ -7,7 +9,8 @@ import 'package:validators/validators.dart' as validator;
 class AuthenticationScreen extends StatefulWidget {
   final Function onInit;
   final Function selectedTab;
-  const AuthenticationScreen({Key key, this.onInit, this.selectedTab}) : super(key: key);
+  const AuthenticationScreen({Key key, this.onInit, this.selectedTab})
+      : super(key: key);
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -21,6 +24,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   String error = '';
   bool _isPassword = true;
   bool loading = false;
+  bool isAuth = false;
 
   void toggleShowPassword() {
     setState(() {
@@ -39,7 +43,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         loading = true;
       });
       _formKey.currentState?.save();
-      await UserSecureStorage.setUserCredentials(emailController.text, passwordController.text);
+      await UserSecureStorage.setUserCredentials(
+          emailController.text, passwordController.text);
       setState(() {
         loading = false;
       });
@@ -47,6 +52,75 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       if (widget.selectedTab != null)
         widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
     }
+  }
+
+  void _checkBiometric() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool canCheckBiometrics = false;
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } catch (e) {
+      print('error biometrics $e');
+    }
+
+    print('biometrics is available: $canCheckBiometrics');
+
+    // enumerate biometric technologies
+    List<BiometricType> availableBiometrics;
+    BiometricType bio = BiometricType.fingerprint;
+    try {
+      availableBiometrics = await auth.getAvailableBiometrics();
+      print('Biometrics ll: $bio');
+    } catch (e) {
+      print("error enumerate biometrics $e");
+    }
+
+    print("following biometrics are available");
+    if (availableBiometrics.isNotEmpty) {
+      availableBiometrics.forEach((ab) {
+        print("tech: $ab");
+      });
+    } else {
+      print("no biometrics are available");
+    }
+
+    // authenticate with biometrics
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticate(
+        localizedReason: 'Touch your finger on the sensor to login',
+        useErrorDialogs: true,
+        stickyAuth: false,
+        androidAuthStrings:
+            AndroidAuthMessages(signInTitle: "Login to HomePage"),
+      );
+      print('Authenticated: $authenticated');
+    } catch (e) {
+      print("error using biometric auth: $e");
+    }
+    setState(() {
+      isAuth = authenticated ? true : false;
+    });
+
+    if (isAuth) {
+      setState(() {
+        loading = true;
+      });
+      _formKey.currentState?.save();
+      await UserSecureStorage.setUserCredentials('123@123.com', '123456');
+      setState(() {
+        loading = false;
+      });
+      if (widget.onInit != null) widget.onInit();
+      if (widget.selectedTab != null)
+        widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
+    }
+
+    print("authenticated: $authenticated");
   }
 
   @override
@@ -58,7 +132,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             child: Card(
               margin: EdgeInsets.symmetric(vertical: 5),
               elevation: 3,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Form(
                 key: _formKey,
                 child: Padding(
@@ -71,7 +146,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           children: [
                             Text(
                               'Welcome to Security Demo',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 5),
@@ -88,12 +164,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         hintText: 'someone@email.com',
                         isEmail: true,
                         textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                        onFieldSubmitted: (_) =>
+                            FocusScope.of(context).nextFocus(),
                         validator: (value) {
                           if (value != null && value.isEmpty) {
                             return "Email cannot be empty";
                           }
-                          if (value != null && value.isNotEmpty && !validator.isEmail(value)) {
+                          if (value != null &&
+                              value.isNotEmpty &&
+                              !validator.isEmail(value)) {
                             return "Please enter a valid email";
                           }
                           return null;
@@ -123,13 +202,30 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         },
                         suffixIcon: IconButton(
                           onPressed: () => toggleShowPassword(),
-                          icon: Icon(_isPassword ? Icons.visibility : Icons.visibility_off),
+                          icon: Icon(_isPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 15.0,
+                        ),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 16),
+                          ),
+                          onPressed: () {
+                            _checkBiometric();
+                          },
+                          child: Text('Login with biometrics'),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
+                          style: ElevatedButton.styleFrom(
+                              primary: Theme.of(context).accentColor),
                           onPressed: () {
                             onSignIn();
                           },
@@ -148,7 +244,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 error,
-                                style: TextStyle(color: Colors.red, fontSize: 14.0),
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 14.0),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -159,8 +256,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           onTap: () {},
                           child: Text(
                             'Forgot your password?',
-                            style:
-                                TextStyle(decoration: TextDecoration.underline, color: Colors.blue),
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue),
                           ),
                         ),
                       ),
@@ -174,7 +272,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
+                          style: ElevatedButton.styleFrom(
+                              primary: Theme.of(context).accentColor),
                           onPressed: () {},
                           child: Text(
                             'Click here to Register',

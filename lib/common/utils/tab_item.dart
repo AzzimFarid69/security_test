@@ -6,7 +6,7 @@ enum TabItem {
   deviceInfo,
   cryptography,
   pageOne,
-  auth,
+  local,
   logout,
 }
 
@@ -16,7 +16,7 @@ const Map<TabItem, String> drawerName = {
   TabItem.deviceInfo: 'Device Info',
   TabItem.cryptography: 'Cryptography',
   TabItem.pageOne: 'Tab One',
-  TabItem.auth: 'Authentication',
+  TabItem.local: 'Location',
   TabItem.logout: 'Sign Out',
 };
 
@@ -26,7 +26,7 @@ const Map<TabItem, String> tabName = {
   TabItem.deviceInfo: 'Device Info Demo',
   TabItem.cryptography: 'Cryptography Demo',
   TabItem.pageOne: 'Tab One Example',
-  TabItem.auth: 'Authentication Example',
+  TabItem.local: 'Location Example',
   TabItem.logout: null,
 };
 
@@ -36,6 +36,6 @@ const Map<TabItem, IconData> tabIcons = {
   TabItem.deviceInfo: Icons.phone_android_sharp,
   TabItem.cryptography: Icons.enhanced_encryption_outlined,
   TabItem.pageOne: Icons.account_box_outlined,
-  TabItem.auth: Icons.fingerprint,
+  TabItem.local: Icons.map,
   TabItem.logout: Icons.logout,
 };

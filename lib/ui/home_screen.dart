@@ -14,6 +14,7 @@ import 'package:security_test/ui/authentication_screen.dart';
 import 'package:security_test/ui/cryptography_screen.dart';
 import 'package:security_test/ui/device_info_screen.dart';
 import 'package:security_test/ui/expansion_screen.dart';
+import 'package:security_test/ui/location.dart';
 import 'package:security_test/ui/tab_1.dart';
 
 import 'authentication_screen.dart';
@@ -73,6 +74,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
       DeviceInfoScreen(),
       CryptographyScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
+      Location(),
     ];
 
     // You can let the plugin handle fetching the status and showing a dialog,
@@ -235,10 +237,10 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
                 },
               ),
               DrawerList(
-                tabItem: TabItem.auth,
+                tabItem: TabItem.local,
                 currentTab: _currentTab,
                 onTap: () {
-                  selectTab(TabItem.auth,
+                  selectTab(TabItem.local,
                       isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),
