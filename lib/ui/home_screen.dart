@@ -15,7 +15,9 @@ import 'package:security_test/ui/cryptography_screen.dart';
 import 'package:security_test/ui/device_info_screen.dart';
 import 'package:security_test/ui/expansion_screen.dart';
 import 'package:security_test/ui/location.dart';
+import 'package:security_test/ui/payment_history.dart';
 import 'package:security_test/ui/tab_1.dart';
+import 'package:security_test/ui/tnc.dart';
 
 import 'authentication_screen.dart';
 
@@ -75,6 +77,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
       CryptographyScreen(),
       TabOne(title: tabName[TabItem.pageOne]),
       Location(),
+      TncScreen(),
+      PaymentHistory(),
     ];
 
     // You can let the plugin handle fetching the status and showing a dialog,
@@ -241,6 +245,22 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
                 currentTab: _currentTab,
                 onTap: () {
                   selectTab(TabItem.local,
+                      isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.tnc,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.tnc,
+                      isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.paymentHistory,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.paymentHistory,
                       isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),

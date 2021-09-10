@@ -7,6 +7,8 @@ enum TabItem {
   cryptography,
   pageOne,
   local,
+  tnc,
+  paymentHistory,
   logout,
 }
 
@@ -17,6 +19,8 @@ const Map<TabItem, String> drawerName = {
   TabItem.cryptography: 'Cryptography',
   TabItem.pageOne: 'Tab One',
   TabItem.local: 'Location',
+  TabItem.tnc: 'Terms & Conditions',
+  TabItem.paymentHistory: 'Payment History',
   TabItem.logout: 'Sign Out',
 };
 
@@ -27,6 +31,8 @@ const Map<TabItem, String> tabName = {
   TabItem.cryptography: 'Cryptography Demo',
   TabItem.pageOne: 'Tab One Example',
   TabItem.local: 'Location Example',
+  TabItem.tnc: 'Terms & Conditions Example',
+  TabItem.paymentHistory: 'Payment History Example',
   TabItem.logout: null,
 };
 
@@ -37,5 +43,7 @@ const Map<TabItem, IconData> tabIcons = {
   TabItem.cryptography: Icons.enhanced_encryption_outlined,
   TabItem.pageOne: Icons.account_box_outlined,
   TabItem.local: Icons.map,
+  TabItem.tnc: Icons.document_scanner,
+  TabItem.paymentHistory: Icons.payment,
   TabItem.logout: Icons.logout,
 };

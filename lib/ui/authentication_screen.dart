@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:security_test/common/api/user_secure_storage.dart';
 import 'package:security_test/common/utils/tab_item.dart';
 import 'package:security_test/common/widget/text_form_field.dart';
@@ -7,7 +9,8 @@ import 'package:validators/validators.dart' as validator;
 class AuthenticationScreen extends StatefulWidget {
   final Function onInit;
   final Function selectedTab;
-  const AuthenticationScreen({Key key, this.onInit, this.selectedTab}) : super(key: key);
+  const AuthenticationScreen({Key key, this.onInit, this.selectedTab})
+      : super(key: key);
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -19,6 +22,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   TextEditingController passwordController = TextEditingController();
 
   String error = '';
+  bool isAuth = false;
   bool _isPassword = true;
   bool loading = false;
 
@@ -39,7 +43,58 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         loading = true;
       });
       _formKey.currentState?.save();
-      await UserSecureStorage.setUserCredentials(emailController.text, passwordController.text);
+      await UserSecureStorage.setUserCredentials(
+          emailController.text, passwordController.text);
+      setState(() {
+        loading = false;
+      });
+      if (widget.onInit != null) widget.onInit();
+      if (widget.selectedTab != null)
+        widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
+    }
+  }
+
+  void _checkBiometric() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool canCheckBiometrics = false;
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } catch (e) {
+      print('Error biometric $e');
+    }
+
+    List<BiometricType> availableBiometrics;
+    BiometricType bio = BiometricType.fingerprint;
+
+    try {
+      availableBiometrics = await auth.getAvailableBiometrics();
+    } catch (e) {
+      print('Error enumerate biometrics $e');
+    }
+
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticate(
+        localizedReason: 'Touch your finger on the sensor to login',
+        useErrorDialogs: true,
+        stickyAuth: false,
+        androidAuthStrings:
+            AndroidAuthMessages(signInTitle: 'Login to HomePage'),
+      );
+    } catch (e) {
+      print('authenticated $authenticated');
+    }
+
+    setState(() {
+      isAuth = authenticated ? true : false;
+    });
+
+    if (isAuth) {
+      setState(() {
+        loading = true;
+      });
+      _formKey.currentState?.save();
+      await UserSecureStorage.setUserCredentials('123@123.com', '123456');
       setState(() {
         loading = false;
       });
@@ -132,6 +187,17 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             icon: Icon(_isPassword
                                 ? Icons.visibility
                                 : Icons.visibility_off),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 10.0,
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              _checkBiometric();
+                            },
+                            child: Text('Login with biometric'),
                           ),
                         ),
                         Padding(

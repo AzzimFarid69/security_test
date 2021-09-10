@@ -1,4 +1,5 @@
 import 'package:security_test/models/month_model.dart';
+import 'package:security_test/models/payment_history_model.dart';
 
 class Constants {
   static const skEmail = 'email';
@@ -55,4 +56,22 @@ class Constants {
       ];
   static const double padding = 20;
   static const double avatarRadius = 45;
+  static List<PaymentHistoryModel> getPayHistory() => [
+        PaymentHistoryModel(
+          '18-07-2017 06:27:28 PM',
+          'ulp100370',
+          '1707180004058984',
+          '15,000.00',
+          '1',
+          'Immediate Bill Payment',
+        ),
+        PaymentHistoryModel(
+          '19-07-2017 06:30:28 PM',
+          'ulp100371',
+          '1707180004058985',
+          '15,000.00',
+          '2',
+          'Transfer Funds',
+        )
+      ];
 }

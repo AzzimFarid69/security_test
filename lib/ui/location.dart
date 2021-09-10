@@ -10,6 +10,21 @@ class Location extends StatefulWidget {
 
 class _LocationState extends State<Location> {
   PermissionStatus _permissionStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      onLayoutDone(timeStamp);
+    });
+  }
+
+  void onLayoutDone(Duration timeStamp) async {
+    _permissionStatus = await Permission.location.status;
+    setState(() {});
+    print('Permission status: $_permissionStatus');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
