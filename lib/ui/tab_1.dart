@@ -12,18 +12,20 @@ class TabOne extends StatefulWidget {
 class _TabOneState extends State<TabOne> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Text("Hello from ${widget.title ?? ''}"),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(context, Routes.otp,
-                  arguments: CommonArgument(title: "This is page one example")),
-              child: Text("Go to OTP & Confirmation Template"),
-            ),
-          ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Text("Hello from ${widget.title ?? ''}"),
+              TextButton(
+                onPressed: () => Navigator.pushNamed(context, Routes.otp,
+                    arguments: CommonArgument(title: "This is page one example")),
+                child: Text("Go to OTP & Confirmation Template"),
+              ),
+            ],
+          ),
         ),
       ),
     );

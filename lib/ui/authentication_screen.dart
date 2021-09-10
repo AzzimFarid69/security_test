@@ -127,161 +127,149 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return loading
         ? CircularProgressIndicator()
-        : Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Card(
-              margin: EdgeInsets.symmetric(vertical: 5),
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Welcome to Security Demo',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Key in any random email or password for testing',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      MyTextFormField(
-                        controller: emailController,
-                        info: 'Email',
-                        hintText: 'someone@email.com',
-                        isEmail: true,
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) =>
-                            FocusScope.of(context).nextFocus(),
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return "Email cannot be empty";
-                          }
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              !validator.isEmail(value)) {
-                            return "Please enter a valid email";
-                          }
-                          return null;
-                        },
-                        suffixIcon: emailController.text.isNotEmpty
-                            ? IconButton(
-                                onPressed: () {
-                                  emailController.clear();
-                                },
-                                icon: Icon(
-                                  Icons.clear,
-                                  size: 20,
-                                ),
-                              )
-                            : null,
-                      ),
-                      MyTextFormField(
-                        controller: passwordController,
-                        info: 'Password',
-                        hintText: 'Your password',
-                        isPassword: _isPassword,
-                        validator: (value) {
-                          if (value != null && value.length < 6) {
-                            return "Enter a password with 6+ character long";
-                          }
-                          return null;
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: () => toggleShowPassword(),
-                          icon: Icon(_isPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 15.0,
-                        ),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 16),
-                          ),
-                          onPressed: () {
-                            _checkBiometric();
-                          },
-                          child: Text('Login with biometrics'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).accentColor),
-                          onPressed: () {
-                            onSignIn();
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            child: Text(
-                              'Sign In',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      error.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                error,
+        : SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Card(
+                margin: EdgeInsets.symmetric(vertical: 5),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Welcome to Security Demo',
                                 style: TextStyle(
-                                    color: Colors.red, fontSize: 14.0),
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center,
                               ),
-                            )
-                          : SizedBox(height: 0.0),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'Forgot your password?',
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.blue),
+                              SizedBox(height: 5),
+                              Text(
+                                'Key in any random email or password for testing',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text(
-                          "Don't have an account yet? ",
-                          style: TextStyle(color: Colors.black),
+                        MyTextFormField(
+                          controller: emailController,
+                          info: 'Email',
+                          hintText: 'someone@email.com',
+                          isEmail: true,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          validator: (value) {
+                            if (value != null && value.isEmpty) {
+                              return "Email cannot be empty";
+                            }
+                            if (value != null &&
+                                value.isNotEmpty &&
+                                !validator.isEmail(value)) {
+                              return "Please enter a valid email";
+                            }
+                            return null;
+                          },
+                          suffixIcon: emailController.text.isNotEmpty
+                              ? IconButton(
+                                  onPressed: () {
+                                    emailController.clear();
+                                  },
+                                  icon: Icon(
+                                    Icons.clear,
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).accentColor),
-                          onPressed: () {},
-                          child: Text(
-                            'Click here to Register',
-                            style: TextStyle(fontSize: 13.0),
+                        MyTextFormField(
+                          controller: passwordController,
+                          info: 'Password',
+                          hintText: 'Your password',
+                          isPassword: _isPassword,
+                          validator: (value) {
+                            if (value != null && value.length < 6) {
+                              return "Enter a password with 6+ character long";
+                            }
+                            return null;
+                          },
+                          suffixIcon: IconButton(
+                            onPressed: () => toggleShowPassword(),
+                            icon: Icon(_isPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Theme.of(context).accentColor),
+                            onPressed: () {
+                              onSignIn();
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              child: Text(
+                                'Sign In',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        error.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  error,
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 14.0),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : SizedBox(height: 0.0),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              'Forgot your password?',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Text(
+                            "Don't have an account yet? ",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Theme.of(context).accentColor),
+                            onPressed: () {},
+                            child: Text(
+                              'Click here to Register',
+                              style: TextStyle(fontSize: 13.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

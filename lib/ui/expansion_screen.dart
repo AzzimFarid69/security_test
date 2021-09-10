@@ -20,16 +20,18 @@ class _ExpansionScreenState extends State<ExpansionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0.0),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
-        itemCount: monthModel.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildPlayerModelList(monthModel[index]);
-        },
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          itemCount: monthModel.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildPlayerModelList(monthModel[index]);
+          },
+        ),
       ),
     );
   }
