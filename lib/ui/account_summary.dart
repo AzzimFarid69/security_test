@@ -9,7 +9,9 @@ class AccountSummaryScreen extends StatefulWidget {
 }
 
 class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
-  var acc = FormatUtils.formatCASAAccountNumber('1313131313132');
+  var acc13 = FormatUtils.formatCASAAccountNumber('8123456789012');
+  var acc14 = FormatUtils.formatCASAAccountNumber('81234567890123');
+  var acc15 = FormatUtils.formatCASAAccountNumber('812345678901234');
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,9 +21,9 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            acc,
-          ),
+          Text(acc13),
+          Text(acc14),
+          Text(acc15),
         ],
       ),
     );
