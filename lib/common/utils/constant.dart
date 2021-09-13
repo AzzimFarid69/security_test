@@ -2,6 +2,9 @@ import 'package:security_test/models/month_model.dart';
 import 'package:security_test/models/payment_history_model.dart';
 
 class Constants {
+  // Default Value
+  static const DEFAULT_CURRENCY = 'LKR';
+  static const DEFAULT_AMOUNT = '0.00';
   static const skEmail = 'email';
   static const skPassword = 'password';
   static List<GeneralModel> getMonthModel() => [
