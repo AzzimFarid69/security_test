@@ -10,6 +10,7 @@ import 'package:security_test/common/utils/tab_item.dart';
 import 'package:security_test/common/utils/utils.dart';
 import 'package:security_test/common/widget/drawer_list.dart';
 import 'package:security_test/models/security_model.dart';
+import 'package:security_test/ui/account_summary.dart';
 import 'package:security_test/ui/authentication_screen.dart';
 import 'package:security_test/ui/cryptography_screen.dart';
 import 'package:security_test/ui/device_info_screen.dart';
@@ -79,6 +80,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
       Location(),
       TncScreen(),
       PaymentHistory(),
+      AccountSummaryScreen(),
     ];
 
     // You can let the plugin handle fetching the status and showing a dialog,
@@ -261,6 +263,14 @@ class _HomeScreenState extends BaseStateful<HomeScreen>
                 currentTab: _currentTab,
                 onTap: () {
                   selectTab(TabItem.paymentHistory,
+                      isChangeTab: true, hasUser: isAuthenticate);
+                },
+              ),
+              DrawerList(
+                tabItem: TabItem.accountSummary,
+                currentTab: _currentTab,
+                onTap: () {
+                  selectTab(TabItem.accountSummary,
                       isChangeTab: true, hasUser: isAuthenticate);
                 },
               ),

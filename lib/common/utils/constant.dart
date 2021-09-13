@@ -74,4 +74,11 @@ class Constants {
           'Transfer Funds',
         )
       ];
+
+  // Value Formatting //
+  static const FORMAT_NUMBER = '##,###,###';
+  static const FORMAT_AMOUNT = '###,###,###,###,##0.00';
+  static const FORMAT_EXCHANGE_RATE = 'N4';
+  static const FORMAT_FUND_TRANSFER_EXCHANGE_RATE = 'N9';
+  static const FORMAT_DEFAULT_TIMEZONE = 'Asia/Colombo';
 }

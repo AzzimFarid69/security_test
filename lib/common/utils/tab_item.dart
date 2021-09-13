@@ -9,6 +9,7 @@ enum TabItem {
   local,
   tnc,
   paymentHistory,
+  accountSummary,
   logout,
 }
 
@@ -21,6 +22,7 @@ const Map<TabItem, String> drawerName = {
   TabItem.local: 'Location',
   TabItem.tnc: 'Terms & Conditions',
   TabItem.paymentHistory: 'Payment History',
+  TabItem.accountSummary: 'Account Summary',
   TabItem.logout: 'Sign Out',
 };
 
@@ -33,6 +35,7 @@ const Map<TabItem, String> tabName = {
   TabItem.local: 'Location Example',
   TabItem.tnc: 'Terms & Conditions Example',
   TabItem.paymentHistory: 'Payment History Example',
+  TabItem.accountSummary: 'Account Summary Example',
   TabItem.logout: null,
 };
 
@@ -45,5 +48,6 @@ const Map<TabItem, IconData> tabIcons = {
   TabItem.local: Icons.map,
   TabItem.tnc: Icons.document_scanner,
   TabItem.paymentHistory: Icons.payment,
+  TabItem.accountSummary: Icons.account_circle,
   TabItem.logout: Icons.logout,
 };
