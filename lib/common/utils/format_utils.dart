@@ -2,14 +2,17 @@ import 'package:intl/intl.dart';
 import 'package:security_test/common/utils/constant.dart';
 
 class FormatUtils {
-  static var currencyPattern = new NumberFormat.decimalPattern(Constants.FORMAT_AMOUNT);
+  static var currencyPattern =
+      new NumberFormat.decimalPattern(Constants.FORMAT_AMOUNT);
 
   static String formatCASAAccountNumber(
     String accountNumber, {
     bool accountNullable = false,
   }) {
     var formattedAccount;
-    if (accountNumber.isNotEmpty && accountNumber.length >= 13 && accountNumber.length <= 15) {
+    if (accountNumber.isNotEmpty &&
+        accountNumber.length >= 13 &&
+        accountNumber.length <= 15) {
       var part1;
       var part2;
       var part3;
