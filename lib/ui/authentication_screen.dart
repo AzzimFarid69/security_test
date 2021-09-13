@@ -39,11 +39,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     if (_formKey.currentState != null && _formKey.currentState.validate()) {
       setState(() => loading = true);
       _formKey.currentState?.save();
-      await UserSecureStorage.setUserCredentials(
-          emailTxtField.text, passwordTxtField.text);
-      setState(() {
-        loading = false;
-      });
+      await UserSecureStorage.setUserCredentials(emailTxtField.text, passwordTxtField.text);
+      setState(() => loading = false);
       if (widget.onInit != null) widget.onInit();
       if (widget.selectedTab != null)
         widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
@@ -74,8 +71,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         localizedReason: 'Touch your finger on the sensor to login',
         useErrorDialogs: true,
         stickyAuth: false,
-        androidAuthStrings:
-            AndroidAuthMessages(signInTitle: 'Login to HomePage'),
+        androidAuthStrings: AndroidAuthMessages(signInTitle: 'Login to HomePage'),
       );
     } catch (e) {
       print('authenticated $authenticated');
@@ -94,8 +90,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       setState(() {
         loading = false;
       });
-      await UserSecureStorage.setUserCredentials(emailTxtField.text, passwordTxtField.text);
-      setState(() => loading = false);
       if (widget.onInit != null) widget.onInit();
       if (widget.selectedTab != null)
         widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
@@ -176,6 +170,17 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         ),
                         emailTxtField ?? Container(),
                         passwordTxtField ?? Container(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 10.0,
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              _checkBiometric();
+                            },
+                            child: Text('Login with biometric'),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: ElevatedButton(
