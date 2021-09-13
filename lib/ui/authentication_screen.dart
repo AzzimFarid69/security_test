@@ -9,8 +9,7 @@ import 'package:validators/validators.dart' as validator;
 class AuthenticationScreen extends StatefulWidget {
   final Function onInit;
   final Function selectedTab;
-  const AuthenticationScreen({Key key, this.onInit, this.selectedTab})
-      : super(key: key);
+  const AuthenticationScreen({Key key, this.onInit, this.selectedTab}) : super(key: key);
 
   @override
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
@@ -18,8 +17,7 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  MyTextFormField emailTxtField, passwordTxtField;
 
   String error = '';
   bool isAuth = false;
@@ -39,12 +37,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     }
 
     if (_formKey.currentState != null && _formKey.currentState.validate()) {
-      setState(() {
-        loading = true;
-      });
+      setState(() => loading = true);
       _formKey.currentState?.save();
       await UserSecureStorage.setUserCredentials(
-          emailController.text, passwordController.text);
+          emailTxtField.text, passwordTxtField.text);
       setState(() {
         loading = false;
       });
@@ -98,10 +94,50 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       setState(() {
         loading = false;
       });
+      await UserSecureStorage.setUserCredentials(emailTxtField.text, passwordTxtField.text);
+      setState(() => loading = false);
       if (widget.onInit != null) widget.onInit();
       if (widget.selectedTab != null)
         widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailTxtField = MyTextFormField(
+      labelText: 'Email',
+      hintText: 'someone@email.com',
+      isClearable: true,
+      isEmail: true,
+      isUnderline: false,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+      enableInteractiveSelection: false,
+      validator: (value) {
+        if (value != null && value.isEmpty) {
+          return "Email cannot be empty";
+        }
+        if (value != null && value.isNotEmpty && !validator.isEmail(value)) {
+          return "Please enter a valid email";
+        }
+        return null;
+      },
+    );
+
+    passwordTxtField = MyTextFormField(
+      labelText: 'Password',
+      hintText: 'Your password',
+      isPassword: _isPassword,
+      isPasswordToggle: true,
+      isUnderline: false,
+      validator: (value) {
+        if (value != null && value.length < 6) {
+          return "Enter a password with 6+ character long";
+        }
+        return null;
+      },
+    );
   }
 
   @override
@@ -114,8 +150,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               child: Card(
                 margin: EdgeInsets.symmetric(vertical: 5),
                 elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 child: Form(
                   key: _formKey,
                   child: Padding(
@@ -128,8 +163,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             children: [
                               Text(
                                 'Welcome to Security Demo',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(height: 5),
@@ -140,71 +174,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             ],
                           ),
                         ),
-                        MyTextFormField(
-                          controller: emailController,
-                          info: 'Email',
-                          hintText: 'someone@email.com',
-                          isEmail: true,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return "Email cannot be empty";
-                            }
-                            if (value != null &&
-                                value.isNotEmpty &&
-                                !validator.isEmail(value)) {
-                              return "Please enter a valid email";
-                            }
-                            return null;
-                          },
-                          suffixIcon: emailController.text.isNotEmpty
-                              ? IconButton(
-                                  onPressed: () {
-                                    emailController.clear();
-                                  },
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: 20,
-                                  ),
-                                )
-                              : null,
-                        ),
-                        MyTextFormField(
-                          controller: passwordController,
-                          info: 'Password',
-                          hintText: 'Your password',
-                          isPassword: _isPassword,
-                          validator: (value) {
-                            if (value != null && value.length < 6) {
-                              return "Enter a password with 6+ character long";
-                            }
-                            return null;
-                          },
-                          suffixIcon: IconButton(
-                            onPressed: () => toggleShowPassword(),
-                            icon: Icon(_isPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10.0,
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              _checkBiometric();
-                            },
-                            child: Text('Login with biometric'),
-                          ),
-                        ),
+                        emailTxtField ?? Container(),
+                        passwordTxtField ?? Container(),
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).accentColor),
+                            style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
                             onPressed: () {
                               onSignIn();
                             },
@@ -223,8 +198,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   error,
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 14.0),
+                                  style: TextStyle(color: Colors.red, fontSize: 14.0),
                                   textAlign: TextAlign.center,
                                 ),
                               )
@@ -236,8 +210,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             child: Text(
                               'Forgot your password?',
                               style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Colors.blue),
+                                  decoration: TextDecoration.underline, color: Colors.blue),
                             ),
                           ),
                         ),
@@ -251,8 +224,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).accentColor),
+                            style: ElevatedButton.styleFrom(primary: Theme.of(context).accentColor),
                             onPressed: () {},
                             child: Text(
                               'Click here to Register',
