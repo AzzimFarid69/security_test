@@ -15,8 +15,7 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  MyTextFormField emailTxtField, passwordTxtField;
 
   String error = '';
   bool _isPassword = true;
@@ -35,18 +34,52 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     }
 
     if (_formKey.currentState != null && _formKey.currentState.validate()) {
-      setState(() {
-        loading = true;
-      });
+      setState(() => loading = true);
       _formKey.currentState?.save();
-      await UserSecureStorage.setUserCredentials(emailController.text, passwordController.text);
-      setState(() {
-        loading = false;
-      });
+      await UserSecureStorage.setUserCredentials(emailTxtField.text, passwordTxtField.text);
+      setState(() => loading = false);
       if (widget.onInit != null) widget.onInit();
       if (widget.selectedTab != null)
         widget.selectedTab(TabItem.expansion, isChangeTab: true, hasUser: true);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailTxtField = MyTextFormField(
+      labelText: 'Email',
+      hintText: 'someone@email.com',
+      isClearable: true,
+      isEmail: true,
+      isUnderline: false,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+      enableInteractiveSelection: false,
+      validator: (value) {
+        if (value != null && value.isEmpty) {
+          return "Email cannot be empty";
+        }
+        if (value != null && value.isNotEmpty && !validator.isEmail(value)) {
+          return "Please enter a valid email";
+        }
+        return null;
+      },
+    );
+
+    passwordTxtField = MyTextFormField(
+      labelText: 'Password',
+      hintText: 'Your password',
+      isPassword: _isPassword,
+      isPasswordToggle: true,
+      isUnderline: false,
+      validator: (value) {
+        if (value != null && value.length < 6) {
+          return "Enter a password with 6+ character long";
+        }
+        return null;
+      },
+    );
   }
 
   @override
@@ -83,50 +116,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             ],
                           ),
                         ),
-                        MyTextFormField(
-                          controller: emailController,
-                          info: 'Email',
-                          hintText: 'someone@email.com',
-                          isEmail: true,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return "Email cannot be empty";
-                            }
-                            if (value != null && value.isNotEmpty && !validator.isEmail(value)) {
-                              return "Please enter a valid email";
-                            }
-                            return null;
-                          },
-                          suffixIcon: emailController.text.isNotEmpty
-                              ? IconButton(
-                                  onPressed: () {
-                                    emailController.clear();
-                                  },
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: 20,
-                                  ),
-                                )
-                              : null,
-                        ),
-                        MyTextFormField(
-                          controller: passwordController,
-                          info: 'Password',
-                          hintText: 'Your password',
-                          isPassword: _isPassword,
-                          validator: (value) {
-                            if (value != null && value.length < 6) {
-                              return "Enter a password with 6+ character long";
-                            }
-                            return null;
-                          },
-                          suffixIcon: IconButton(
-                            onPressed: () => toggleShowPassword(),
-                            icon: Icon(_isPassword ? Icons.visibility : Icons.visibility_off),
-                          ),
-                        ),
+                        emailTxtField ?? Container(),
+                        passwordTxtField ?? Container(),
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: ElevatedButton(
