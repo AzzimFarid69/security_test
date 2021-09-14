@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 import 'package:security_test/common/utils/constant.dart';
 import 'package:security_test/models/amount_dto.dart';
@@ -60,8 +61,10 @@ class FormatUtils {
     return formattedAccount;
   }
 
-  static String formatFDLoanAccountNumber(String accountNumber,
-      {bool accountNullable = false}) {
+  static String formatFDLoanAccountNumber(
+    String accountNumber, {
+    bool accountNullable = false,
+  }) {
     var formattedAccount;
 
     if (accountNumber.isNotEmpty &&
@@ -77,32 +80,40 @@ class FormatUtils {
         case 14:
           {
             part1 = '00${accountNumber.substring(0, 1)}';
-            part2 = accountNumber.substring(1, 2);
-            part3 = accountNumber.substring(3, 4);
-            part4 = accountNumber.substring(5, 8);
+            part2 = accountNumber.substring(1, 3);
+            part3 = accountNumber.substring(3, 5);
+            part4 = accountNumber.substring(5, 13);
             part5 = accountNumber.substring(13, 14);
           }
           break;
         case 15:
           {
             part1 = '0${accountNumber.substring(0, 2)}';
-            part2 = accountNumber.substring(2, 2);
-            part3 = accountNumber.substring(4, 5);
-            part4 = accountNumber.substring(6, 8);
-            part5 = accountNumber.substring(13, 14);
+            part2 = accountNumber.substring(2, 4);
+            part3 = accountNumber.substring(4, 6);
+            part4 = accountNumber.substring(6, 14);
+            part5 = accountNumber.substring(14, 15);
           }
           break;
         case 16:
           {
             part1 = accountNumber.substring(0, 3);
-            part2 = accountNumber.substring(3, 4);
-            part3 = accountNumber.substring(5, 6);
-            part4 = accountNumber.substring(7, 8);
-            part5 = accountNumber.substring(14, 15);
+            part2 = accountNumber.substring(3, 5);
+            part3 = accountNumber.substring(5, 7);
+            part4 = accountNumber.substring(7, 15);
+            part5 = accountNumber.substring(15, 16);
           }
           break;
+        default:
+          break;
       }
+
+      formattedAccount = '$part1-$part2-$part3-$part4-$part5';
+    } else {
+      formattedAccount = accountNullable ? null : '-';
     }
+
+    return formattedAccount;
   }
 
   static String formatCCAccountNumber(
@@ -148,5 +159,14 @@ class FormatUtils {
       );
     }
     return '${Constants.DEFAULT_CURRENCY} ${Constants.DEFAULT_AMOUNT}';
+  }
+
+  static String formatter(
+    String amount,
+  ) {
+    double amountString = double.parse(amount);
+    var format = new NumberFormat(Constants.FORMAT_AMOUNT);
+
+    return format.format(amountString);
   }
 }
