@@ -181,4 +181,16 @@ class Constants {
   static const FORMAT_DATETIME = "dd-MM-yyyy hh:mm:ss a";
   static const FORMAT_DATE = "dd-MM-yyyy";
   static const FORMAT_TIME = "hh:mm:ss a";
+
+  // RabbitMQ
+  static const CLIENT_ID = "mobileApp";
+  static const RESPOND_TIMEOUT = 70000;
+  static const REQUESTED_CONNECTION_TIMEOUT = 15000;
+  static const IP = "digiuat.peoplesbank.lk";
+  static const Port = 5672;
+  static const VirtualHost = "/cmb_uat";
+  static const ServerName = IP;
+  static const bool Enabled = false;
+  static const RMQ_U = "";
+  static const RMQ_P = "";
 }
