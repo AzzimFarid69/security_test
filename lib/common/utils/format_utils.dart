@@ -126,7 +126,7 @@ class FormatUtils {
       var part1 = accountNumber.substring(0, 4);
       var part2 = accountNumber.substring(4, 8);
       var part3 = accountNumber.substring(8, 12);
-      var part4 = accountNumber.substring(11, 15);
+      var part4 = accountNumber.substring(11, 16);
 
       // Format: '0000-0000-0000-0000'
       formattedAccount = '$part1-$part2-$part3-$part4';
@@ -168,5 +168,41 @@ class FormatUtils {
     var format = new NumberFormat(Constants.FORMAT_AMOUNT);
 
     return format.format(amountString);
+  }
+
+  static String dateTimeFormat(String dateTime) {
+    var dateString;
+    var dateTimeFormatter = DateFormat(Constants.FORMAT_DATETIME);
+
+    if (dateTime.isNotEmpty) {
+      dateString = dateTimeFormatter.format(DateTime.parse(dateTime));
+      return dateString;
+    }
+
+    return '-';
+  }
+
+  static String dateFormat(String date) {
+    var dateString;
+    var dateFormatter = DateFormat(Constants.FORMAT_DATE);
+
+    if (date.isNotEmpty) {
+      dateString = dateFormatter.format(DateTime.parse(date));
+      return dateString;
+    }
+
+    return '-';
+  }
+
+  static String timeFormat(String time) {
+    var timeString;
+    var timeFormatter = DateFormat(Constants.FORMAT_TIME);
+
+    if (time.isNotEmpty) {
+      timeString = timeFormatter.format(DateTime.parse(time));
+      return timeString;
+    }
+
+    return '-';
   }
 }

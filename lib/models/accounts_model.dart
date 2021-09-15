@@ -19,3 +19,23 @@ class LoanAccountModel {
     this.balance,
   );
 }
+
+class CreditCardAccountModel {
+  final String accountNum;
+  final String balance;
+
+  CreditCardAccountModel(
+    this.accountNum,
+    this.balance,
+  );
+}
+
+class FdAccountModel {
+  final String accountNum;
+  final String balance;
+
+  FdAccountModel(
+    this.accountNum,
+    this.balance,
+  );
+}

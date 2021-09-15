@@ -17,6 +17,8 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
   var acc15 = FormatUtils.formatCASAAccountNumber('812345678901234');
   List<SavingsAccountModel> savingsAccountModel;
   List<LoanAccountModel> loanAccountModel;
+  List<CreditCardAccountModel> creditCardAccountModel;
+  List<FdAccountModel> fdAccountModel;
   final oCcy = new NumberFormat('#,##0.00', 'en_US');
   var dateFormatter = DateFormat(Constants.FORMAT_DATETIME);
   var dateString = DateTime.now();
@@ -25,6 +27,8 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
   void initState() {
     savingsAccountModel = Constants.getSavings();
     loanAccountModel = Constants.getLoans();
+    creditCardAccountModel = Constants.getCreditAcc();
+    fdAccountModel = Constants.getFdAcc();
     super.initState();
   }
 
@@ -92,6 +96,60 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
                 ],
               ),
             ),
+            Card(
+              child: ExpansionTile(
+                key: UniqueKey(),
+                title: Text(
+                  'Credit Card Account',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                children: [
+                  ListView.separated(
+                    separatorBuilder: (context, index) => Container(
+                      color: Colors.white,
+                      child: Divider(
+                        color: Colors.black,
+                      ),
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: creditCardAccountModel.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildCcAccount(creditCardAccountModel[index]);
+                    },
+                  )
+                ],
+              ),
+            ),
+            Card(
+              child: ExpansionTile(
+                key: UniqueKey(),
+                title: Text(
+                  'Fixed Deposit Account',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                children: [
+                  ListView.separated(
+                    separatorBuilder: (context, index) => Container(
+                      color: Colors.white,
+                      child: Divider(
+                        color: Colors.black,
+                      ),
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: fdAccountModel.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildFdAccount(fdAccountModel[index]);
+                    },
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -134,8 +192,22 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text('Date Time'),
+                Text(FormatUtils.dateTimeFormat(dateString.toString())),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text('Date'),
-                Text(dateFormatter.format(dateString)),
+                Text(FormatUtils.dateFormat(dateString.toString())),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Time'),
+                Text(FormatUtils.timeFormat(dateString.toString())),
               ],
             ),
           ],
@@ -145,6 +217,59 @@ class _AccountSummaryScreenState extends State<AccountSummaryScreen> {
   }
 
   Widget _buildLoanAccount(LoanAccountModel item) {
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text(FormatUtils.formatFDLoanAccountNumber(item.accountNum)),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Account Balance'),
+                Text(
+                    '${Constants.DEFAULT_CURRENCY} ${FormatUtils.formatter(item.balance)}')
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCcAccount(CreditCardAccountModel item) {
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Text(FormatUtils.formatCCAccountNumber(item.accountNum)),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Account Balance'),
+                Text(
+                    '${Constants.DEFAULT_CURRENCY} ${FormatUtils.formatter(item.balance)}')
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFdAccount(FdAccountModel item) {
     return Container(
       color: Colors.white,
       child: Padding(

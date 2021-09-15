@@ -132,6 +132,44 @@ class Constants {
         ),
       ];
 
+  static List<CreditCardAccountModel> getCreditAcc() => [
+        CreditCardAccountModel(
+          '1234567891011123',
+          '100000.00',
+        ),
+      ];
+
+  static List<FdAccountModel> getFdAcc() => [
+        FdAccountModel(
+          '2048101000005135',
+          '25000.00',
+        ),
+        FdAccountModel(
+          '2048101000005134',
+          '75000.00',
+        ),
+        FdAccountModel(
+          '2048101000005133',
+          '125000.00',
+        ),
+        FdAccountModel(
+          '2048101000005132',
+          '200000.00',
+        ),
+        FdAccountModel(
+          '2048101000005131',
+          '300000.00',
+        ),
+        FdAccountModel(
+          '12345678910113',
+          '300000.00',
+        ),
+        FdAccountModel(
+          '123456789101135',
+          '300000.20',
+        ),
+      ];
+
   // Value Formatting //
   static const FORMAT_NUMBER = '##,###,###';
   static const FORMAT_AMOUNT = '#,##0.00';
@@ -142,5 +180,5 @@ class Constants {
   // DATE FORMAT //
   static const FORMAT_DATETIME = "dd-MM-yyyy hh:mm:ss a";
   static const FORMAT_DATE = "dd-MM-yyyy";
-  static const FORMAT_TIME = "hh:mm:ss tt";
+  static const FORMAT_TIME = "hh:mm:ss a";
 }
