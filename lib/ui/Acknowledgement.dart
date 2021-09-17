@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/base/base_stateful.dart';
+import 'package:security_test/common/widget/custom_dialog.dart';
 import 'package:security_test/common/widget/custom_widget.dart';
 import 'package:security_test/models/month_model.dart';
 
@@ -36,6 +37,14 @@ class _AcknowledgementState extends BaseStateful<Acknowledgement> {
           onPress: () => Navigator.pop(context),
         ),
       );
+
+  void onListClick(int index) {
+    if (widget.model[index].isBool == true) {
+      CustomDialog.feesAndCharges(context,
+          title: widget.model[index].name, generalList: widget.model[index].feesAndCharges);
+    }
+    print(widget.model[index].toString());
+  }
 
   @override
   Widget getChildView() {
@@ -76,6 +85,7 @@ class _AcknowledgementState extends BaseStateful<Acknowledgement> {
                                 description: value.description,
                                 isInfo: value.isBool,
                                 status: value.status,
+                                onTap: onListClick,
                               );
                             }).toList()
                           : Container(),

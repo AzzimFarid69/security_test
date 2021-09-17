@@ -126,8 +126,8 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
                               title: value.name,
                               description: value.description,
                               isInfo: value.isBool,
-                              onTap: onListClick,
                               status: value.status,
+                              onTap: onListClick,
                             );
                           }).toList(),
                         ),
