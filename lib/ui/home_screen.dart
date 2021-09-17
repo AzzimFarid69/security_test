@@ -167,130 +167,128 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   @override
   Widget getDrawer() => isAuthenticate
       ? Drawer(
-          child: Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.fitWidth,
-                                  image: Image.asset('assets/logo.png').image,
-                                ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: Image.asset('assets/logo.png').image,
                               ),
                             ),
-                            Text(
-                              'Set text to something',
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
-                      )),
-                  !isAuthenticate
-                      ? DrawerList(
-                          tabItem: TabItem.signIn,
-                          currentTab: _currentTab,
-                          onTap: () {
-                            selectTab(TabItem.signIn, isChangeTab: false, hasUser: isAuthenticate);
-                          },
-                        )
-                      : Container(),
-                  DrawerList(
-                    tabItem: TabItem.expansion,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.expansion, isChangeTab: true, hasUser: isAuthenticate);
-                    },
+                          ),
+                          Text(
+                            'Set text to something',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    )),
+                !isAuthenticate
+                    ? DrawerList(
+                        tabItem: TabItem.signIn,
+                        currentTab: _currentTab,
+                        onTap: () {
+                          selectTab(TabItem.signIn, isChangeTab: false, hasUser: isAuthenticate);
+                        },
+                      )
+                    : Container(),
+                DrawerList(
+                  tabItem: TabItem.expansion,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.expansion, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.deviceInfo,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.cryptography,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.pageOne,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.pageOne, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.local,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.local, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.tnc,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.tnc, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.paymentHistory,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.paymentHistory, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
+                  tabItem: TabItem.accountSummary,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.accountSummary, isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                isAuthenticate
+                    ? DrawerList(
+                        tabItem: TabItem.logout,
+                        currentTab: _currentTab,
+                        onTap: () {
+                          logout();
+                          selectTab(TabItem.signIn, isChangeTab: true, hasUser: isAuthenticate);
+                        },
+                      )
+                    : Container(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                          'isJailBroken: ${_securityModel.isJailBroken == null ? "Unknown" : _securityModel.isJailBroken ? "YES" : "NO"}'),
+                      Text(
+                          'isRealDevice: ${_securityModel.isRealDevice == null ? "Unknown" : _securityModel.isRealDevice ? "YES" : "NO"}'),
+                      Text(
+                          'isOnExternalStorage: ${_securityModel.isOnExternalStorage == null ? "Unknown" : _securityModel.isOnExternalStorage ? "YES" : "NO"}'),
+                      Text(
+                          'isSafeDevice: ${_securityModel.isSafeDevice == null ? "Unknown" : _securityModel.isSafeDevice ? "YES" : "NO"}'),
+                    ],
                   ),
-                  DrawerList(
-                    tabItem: TabItem.deviceInfo,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.cryptography,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.pageOne,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.pageOne, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.local,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.local, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.tnc,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.tnc, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.paymentHistory,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.paymentHistory, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  DrawerList(
-                    tabItem: TabItem.accountSummary,
-                    currentTab: _currentTab,
-                    onTap: () {
-                      selectTab(TabItem.accountSummary, isChangeTab: true, hasUser: isAuthenticate);
-                    },
-                  ),
-                  isAuthenticate
-                      ? DrawerList(
-                          tabItem: TabItem.logout,
-                          currentTab: _currentTab,
-                          onTap: () {
-                            logout();
-                            selectTab(TabItem.signIn, isChangeTab: true, hasUser: isAuthenticate);
-                          },
-                        )
-                      : Container(),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                            'isJailBroken: ${_securityModel.isJailBroken == null ? "Unknown" : _securityModel.isJailBroken ? "YES" : "NO"}'),
-                        Text(
-                            'isRealDevice: ${_securityModel.isRealDevice == null ? "Unknown" : _securityModel.isRealDevice ? "YES" : "NO"}'),
-                        Text(
-                            'isOnExternalStorage: ${_securityModel.isOnExternalStorage == null ? "Unknown" : _securityModel.isOnExternalStorage ? "YES" : "NO"}'),
-                        Text(
-                            'isSafeDevice: ${_securityModel.isSafeDevice == null ? "Unknown" : _securityModel.isSafeDevice ? "YES" : "NO"}'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         )

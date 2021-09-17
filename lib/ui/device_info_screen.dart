@@ -43,7 +43,7 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
             : Column(
                 children: [
                   buildInfo('IPV4', _ipv4 ?? ''),
-                  buildInfo('IPV4', _ipv6 ?? ''),
+                  buildInfo('IPV6', _ipv6 ?? ''),
                   buildInfo('Phone', _deviceData.deviceModelFullName ?? ''),
                   SizedBox(height: 16),
                   _deviceData.allInfo?.keys == null

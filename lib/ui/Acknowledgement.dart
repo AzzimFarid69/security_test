@@ -33,7 +33,7 @@ class _AcknowledgementState extends BaseStateful<Acknowledgement> {
         child: CustomWidget.generalButton(
           context,
           title: 'MAKE ANOTHER TRANSFER',
-          onPress: () {},
+          onPress: () => Navigator.pop(context),
         ),
       );
 

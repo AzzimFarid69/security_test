@@ -4,12 +4,14 @@ import 'package:security_test/models/month_model.dart';
 import 'package:security_test/ui/Acknowledgement.dart';
 import 'package:security_test/ui/OneTimeTransfer.dart';
 import 'package:security_test/ui/home_screen.dart';
+import 'package:security_test/ui/input_fields_examples.dart';
 import 'package:security_test/ui/logout_screen.dart';
 
 class Routes {
   static const String home = '/';
-  static const String otp = '/otp';
+  static const String confirmation = '/confirmation';
   static const String acknowledge = '/acknowledge';
+  static const String inputFields = '/inputFields';
   static const String logout = '/logout';
 }
 
@@ -30,13 +32,16 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
-      case Routes.otp:
+      case Routes.confirmation:
         return MaterialPageRoute(builder: (_) => OneTimeTransfer());
       case Routes.acknowledge:
         return MaterialPageRoute(
-            builder: (_) => Acknowledgement(
-                  model: args.generalModel,
-                ));
+          builder: (_) => Acknowledgement(
+            model: args.generalModel,
+          ),
+        );
+      case Routes.inputFields:
+        return MaterialPageRoute(builder: (_) => InputFieldsScreen());
       case Routes.logout:
         return MaterialPageRoute(builder: (_) => LogoutScreen());
       default:
