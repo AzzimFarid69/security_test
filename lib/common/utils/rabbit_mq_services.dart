@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/common/base/BaseResponseDTO.dart';
 import 'package:security_test/common/utils/activity_type.dart';
+import 'package:security_test/common/utils/service_call_control.dart';
 import 'package:security_test/common/utils/service_header.dart';
+import 'package:security_test/common/widget/dialog_builder.dart';
 
 class RabbitMQServices {
   static T retrieveData1<T extends BaseResponseDTO>(
@@ -82,15 +84,21 @@ class RabbitMQServices {
     String dialogMessage,
     Function failedAction,
   ) {
-    return retrieveData5(
-      context,
-      serviceRequest,
-      customValidation,
-      nextActivity,
-      activityType,
-      dialogTitle,
-      dialogMessage,
-      failedAction,
-    );
+    T serviceRespond;
+
+    if (ServiceCallControl.validServiceCall(serviceRequest)) {
+      String title = dialogTitle;
+      String message = dialogMessage.isEmpty
+          ? 'Submiting Additional Request'
+          : dialogMessage;
+
+      DialogBuilder(context).showLoadingIndicator(message, title);
+
+      Future<void> task() {
+        try {} catch (e) {}
+      }
+    } else {}
+
+    return serviceRespond;
   }
 }
