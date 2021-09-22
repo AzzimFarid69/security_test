@@ -28,6 +28,11 @@ class MyApp extends StatelessWidget {
         primaryColor: CustomColors.primaryColor,
         accentColor: CustomColors.accentColor,
         fontFamily: 'Roboto',
+        dividerTheme: DividerThemeData(
+          thickness: 0.8,
+          color: Colors.black,
+          space: 0,
+        ),
       ),
       home: HomeScreen(),
     );

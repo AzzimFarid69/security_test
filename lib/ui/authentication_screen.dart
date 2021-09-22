@@ -24,12 +24,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool _isPassword = true;
   bool loading = false;
 
-  void toggleShowPassword() {
-    setState(() {
-      _isPassword = !_isPassword;
-    });
-  }
-
   void onSignIn() async {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
