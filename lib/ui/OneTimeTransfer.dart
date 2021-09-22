@@ -16,6 +16,7 @@ class OneTimeTransfer extends StatefulWidget {
 
 class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
   TextEditingController _tec = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   String getAppTitle() => "One Time Transfer";
@@ -39,10 +40,7 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
       child: CustomWidget.generalButton(
         context,
         title: 'CONFIRM',
-        onPress: () {
-          Navigator.pushReplacementNamed(context, Routes.acknowledge,
-              arguments: CommonArgument(generalModel: test));
-        },
+        onPress: () => onConfirmClick(),
       ),
     );
   }
@@ -74,6 +72,19 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
           title: test[index].name, generalList: test[index].feesAndCharges);
     }
     print(test[index].toString());
+  }
+
+  void onConfirmClick() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+
+    if (_formKey.currentState != null && _formKey.currentState.validate()) {
+      _formKey.currentState?.save();
+      Navigator.pushReplacementNamed(context, Routes.acknowledge,
+          arguments: CommonArgument(generalModel: test));
+    }
   }
 
   @override
@@ -115,13 +126,13 @@ class _OneTimeTransferState extends BaseStateful<OneTimeTransfer> {
                               title: value.name,
                               description: value.description,
                               isInfo: value.isBool,
-                              onTap: onListClick,
                               status: value.status,
+                              onTap: onListClick,
                             );
                           }).toList(),
                         ),
                         SizedBox(height: 10.0),
-                        OTPTemplate(tec: _tec),
+                        OTPTemplate(tec: _tec, formKey: _formKey),
                       ],
                     ),
                   ),

@@ -52,6 +52,7 @@ dependencies:
   fragment_navigate: ^1.1.1+1
 
   location_permissions: ^4.0.0
+  url_launcher: ^6.0.10
 
 dev_dependencies:
   flutter_test:
