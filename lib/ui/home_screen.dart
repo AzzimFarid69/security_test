@@ -9,6 +9,7 @@ import 'package:security_test/common/utils/route_generator.dart';
 import 'package:security_test/common/utils/tab_item.dart';
 import 'package:security_test/common/utils/utils.dart';
 import 'package:security_test/common/widget/drawer_list.dart';
+import 'package:security_test/common/widget/floatingMenuButton/floating_menu_button.dart';
 import 'package:security_test/models/security_model.dart';
 import 'package:security_test/ui/account_summary.dart';
 import 'package:security_test/ui/authentication_screen.dart';
@@ -295,7 +296,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       : null;
 
   @override
-  Widget getFloatingActionButton() => null;
+  Widget getFloatingActionButton() => FloatingMenuButton();
 
   @override
   Widget getChildView() => Padding(
