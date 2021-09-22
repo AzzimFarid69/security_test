@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MenuAccessControl {
   String GRANT_ACCOUNT_SUMMARY = '/bib/accountsummary/list';
   String GRANT_FUND_TRANSFER = '/bib/fundtransfer/quicktransfer/select';

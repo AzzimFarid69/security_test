@@ -2,14 +2,6 @@ class MyAppGlobalData {
   // Versioning Check
   bool requiredCheckVersion;
 
-  bool get requiredCheckVer {
-    return requiredCheckVersion;
-  }
-
-  set requiredCheckVer(bool requiredCheckVersion) {
-    this.requiredCheckVersion = requiredCheckVersion;
-  }
-
   // User Profile
   String iD;
   String corpId;
@@ -24,6 +16,36 @@ class MyAppGlobalData {
   String authMethod;
   String passwordExpiryIn;
   String salutaion;
+
+  // Permission
+  List<String> accessPermission = [];
+  List authMethodList;
+
+  // Authentication
+  String token;
+  String refreshToken;
+  String tokenType;
+  int tokenValidPeriod;
+  String tokenScope;
+  bool isLogin;
+  String ipAddress;
+
+  // TempData
+  bool firstTimeLogin;
+  bool requiredTermAndCondition;
+  bool requiredChangePassword;
+  String password;
+  String mobilePin;
+  static double currentLatitude;
+  static double currentLongitude;
+
+  bool get requiredCheckVer {
+    return requiredCheckVersion;
+  }
+
+  set requiredCheckVer(bool requiredCheckVersion) {
+    this.requiredCheckVersion = requiredCheckVersion;
+  }
 
   String get id {
     return iD;
@@ -121,9 +143,6 @@ class MyAppGlobalData {
     this.passwordExpiryIn = passwordExpiryIn;
   }
 
-  // Permission
-  List<String> accessPermission = [];
-
   List get accesspermission {
     return accessPermission;
   }
@@ -132,7 +151,93 @@ class MyAppGlobalData {
     this.accessPermission = accessPermission;
   }
 
+  String get toKEN {
+    return token;
+  }
+
+  set toKEN(String token) {
+    this.token = token;
+  }
+
+  String get refreshtoken {
+    return refreshToken;
+  }
+
+  set refreshtoken(String refreshToken) {
+    this.refreshToken = refreshToken;
+  }
+
+  int get tokenvalidperiod {
+    return tokenValidPeriod;
+  }
+
+  set tokenvalidperiod(int tokenValidPeriod) {
+    this.tokenValidPeriod = tokenValidPeriod;
+  }
+
+  String get tokenscope {
+    return tokenScope;
+  }
+
+  set tokenscope(String tokenScope) {
+    this.tokenScope = tokenScope;
+  }
+
+  bool get islogin {
+    return isLogin;
+  }
+
+  set islogin(bool isLogin) {
+    this.isLogin = isLogin;
+  }
+
+  String get ipaddress {
+    return ipAddress;
+  }
+
+  set ipaddress(String ipAddress) {
+    this.ipAddress = ipAddress;
+  }
+
   bool permissionNotNull() {
-    return (accessPermission != null && accessPermission.length > 0);
+    return (accessPermission.isNotEmpty && accessPermission.length > 0);
+  }
+
+  void clearAllData() {
+    iD = null;
+    corpId = null;
+    userId = null;
+    corpName = null;
+    userName = null;
+    userNameJustName = null;
+    firstName = null;
+    lastName = null;
+    lastLoginTime = null;
+    lastLogoutTime = null;
+    authMethod = null;
+    passwordExpiryIn = null;
+    salutaion = null;
+
+    accessPermission = [];
+    authMethodList = [];
+
+    clearToken();
+  }
+
+  void clearToken() {
+    token = null;
+    refreshToken = null;
+    tokenType = null;
+    tokenValidPeriod = 0;
+    tokenScope = null;
+  }
+
+  void clearTempData() {
+    firstTimeLogin = false;
+    requiredTermAndCondition = false;
+    password = null;
+    mobilePin = null;
+    currentLatitude = 0;
+    currentLongitude = 0;
   }
 }
