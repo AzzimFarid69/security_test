@@ -36,51 +36,49 @@ class _ContactsScreenState extends BaseStateful<ContactsScreen> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: CustomWidget.buildBoxConstrain(),
-        child: Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(11.0),
-              child: Column(
-                children: [
-                  buildListTile(
-                    drawable: "ic_location.png",
-                    title: "People's Bank Head Office,\n"
-                        "No.75,\n"
-                        "Sir Chittampalam A. Gardiner Mawatha,\n"
-                        "Colombo 2,\n"
-                        "Sri Lanka.",
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 6.0),
-                    onTap: () {},
-                  ),
-                  buildListTile(
-                    drawable: "ic_phone.png",
-                    title: "+94 (0) 11 2481481",
-                    onTap: () => launch("tel:+94112481481"),
-                  ),
-                  buildListTile(
-                    drawable: "ic_phone.png",
-                    title: "+94 (0) 11 2490490",
-                    onTap: () => launch("tel:+94112490490"),
-                  ),
-                  buildListTile(
-                    drawable: "ic_phone.png",
-                    title: "1961",
-                    onTap: () => launch("tel:1961"),
-                  ),
-                  buildListTile(
-                    drawable: "ic_email.png",
-                    title: "info@peoplesbank.lk",
-                    onTap: () => launch(
-                        "mailto:info@peoplesbank.lk?subject=Meeting&body=Can we meet via Google Meet"),
-                  ),
-                  buildListTile(
-                    drawable: "ic_swift.png",
-                    title: "SWIFT Code: PSBKLKLX",
-                    isDivider: false,
-                    onTap: () {},
-                  ),
-                ],
-              ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(11.0),
+            child: Column(
+              children: [
+                buildListTile(
+                  drawable: "ic_location.png",
+                  title: "People's Bank Head Office,\n"
+                      "No.75,\n"
+                      "Sir Chittampalam A. Gardiner Mawatha,\n"
+                      "Colombo 2,\n"
+                      "Sri Lanka.",
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 6.0),
+                  onTap: () {},
+                ),
+                buildListTile(
+                  drawable: "ic_phone.png",
+                  title: "+94 (0) 11 2481481",
+                  onTap: () => launch("tel:+94112481481"),
+                ),
+                buildListTile(
+                  drawable: "ic_phone.png",
+                  title: "+94 (0) 11 2490490",
+                  onTap: () => launch("tel:+94112490490"),
+                ),
+                buildListTile(
+                  drawable: "ic_phone.png",
+                  title: "1961",
+                  onTap: () => launch("tel:1961"),
+                ),
+                buildListTile(
+                  drawable: "ic_email.png",
+                  title: "info@peoplesbank.lk",
+                  onTap: () => launch(
+                      "mailto:info@peoplesbank.lk?subject=Meeting&body=Can we meet via Google Meet"),
+                ),
+                buildListTile(
+                  drawable: "ic_swift.png",
+                  title: "SWIFT Code: PSBKLKLX",
+                  isDivider: false,
+                  onTap: () {},
+                ),
+              ],
             ),
           ),
         ),
