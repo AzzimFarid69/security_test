@@ -1,3 +1,5 @@
+import 'package:security_test/common/base/MyAppGlobalData.dart';
+import 'package:security_test/models/access_peremission.dart';
 import 'package:security_test/models/accounts_model.dart';
 import 'package:security_test/models/OBForexRate_Resp.dart';
 import 'package:security_test/models/OBInteresRate_Resp.dart';
@@ -276,6 +278,12 @@ class Constants {
           '300000.20',
         ),
       ];
+  static List<AccessPermission> getPermission() => [
+        AccessPermission('/bib/accountsummary/list'),
+        AccessPermission('/bib/fundtransfer/quicktransfer/select'),
+        AccessPermission('/bib/billpayment/select'),
+        AccessPermission('/bib/workflow/group/layout'),
+      ];
 
   // Value Formatting //
   static const FORMAT_NUMBER = '##,###,###';
@@ -300,4 +308,61 @@ class Constants {
   static const bool Enabled = false;
   static const RMQ_U = "";
   static const RMQ_P = "";
+
+  // Menu
+  static int FAB_MENU_BATM = 0001;
+  static int FAB_MENU_PRODUCT_LISTING = 0002;
+  static int FAB_MENU_CALCULATOR = 0003;
+  static int FAB_MENU_BANK_RATES = 0004;
+  static int FAB_MENU_CONTACT_US = 0005;
+
+  static int DASHBOARD_ACCOUNT_SUMMARY = 1000;
+  static int DASHBOARD_TRANSFER_SERVICE = 2000;
+  static int DASHBOARD_PAYMENT_SERVICE = 3000;
+  static int DASHBOARD_TASK_LIST = 4000;
+  static int DASHBOARD_CHEQUE_SERVICE = 5000;
+  static int DASHBOARD_SETTING = 6000;
+
+  static int TRANSFER_FUND_TRANSFER = 2100;
+  static int TRANSFER_FUND_TRANSFER_OWN = 2101;
+  static int TRANSFER_FUND_TRANSFER_FAVOURITE = 2102;
+  static int TRANSFER_FUND_TRANSFER_ONE_TIME = 2103;
+  static int TRANSFER_INTERBANK_FUND_TRANSFER = 2200;
+  static int TRANSFER_INTERBANK_FUND_TRANSFER_FAVOURITE = 2201;
+  static int TRANSFER_INTERBANK_FUND_TRANSFER_ONE_TIME = 2202;
+  static int TRANSFER_BRANCH_TO_BRANCH = 2300;
+
+  static int PAYMENT_FAVOURITE_BILL_PAYMENT = 3001;
+  static int PAYMENT_ONE_TIME_BILL_PAYMENT = 3002;
+  static int PAYMENT_BILL_PAYMENT_HISTORY = 3003;
+  static int PAYMENT_LOAN_REPAYMENT = 3004;
+  static int PAYMENT_CREDIT_CARD_PAYMENT = 3005;
+
+  static int TASKLIST_GROUP = 4001;
+  static int TASKLIST_MY = 4002;
+
+  static int CHEQUE_CHEQUEBOOK_REQUEST = 5001;
+  static int CHEQUE_STATUS_INQUIRY = 5002;
+  static int UNREALIZED_CHEQUE_INQUIRY = 5003;
+  static int STOP_CHEQUE_PAYMENT = 5004;
+
+  static int PAWNING_OWN_INQUIRY = 6001;
+  static int PAWNING_THIRD_PARTY_PAYMENT = 6002;
+
+  static int SETTING_CHANGE_PASSWORD = 7001;
+  static int SETTING_CHANGE_PIN = 7002;
+  static int SETTING_REGISTERED_DEVICE = 7003;
+  static int SETTING_LOGIN_METHOD = 7004;
+
+  static int CALCULATOR_LOAN = 9901;
+  static int CALCULATOR_LOAN_BLOCK = 9902;
+  static int CALCULATOR_PENSION = 9903;
+
+  static int BANK_RATE_EXCHANGE_RATE = 9801;
+  static int BANK_RATE_RATE_INQUIRY = 9802;
+  static int BANK_RATE_FIXED_DEPOSIT_RATE = 9803;
+  static int BANK_RATE_CASA_RATE = 9804;
+
+  static int BATM_SEARCH_BY_CURRENT_LOCATION = 9701;
+  static int BATM_SEARCH_BY_LOCATION = 9702;
 }

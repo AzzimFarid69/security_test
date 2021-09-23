@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 enum TabItem {
   signIn,
+  dashboard,
   expansion,
   deviceInfo,
   cryptography,
@@ -15,6 +16,7 @@ enum TabItem {
 
 const Map<TabItem, String> drawerName = {
   TabItem.signIn: 'Sign In',
+  TabItem.dashboard: 'Dashboard',
   TabItem.expansion: 'Expansion',
   TabItem.deviceInfo: 'Device Info',
   TabItem.cryptography: 'Cryptography',
@@ -28,6 +30,7 @@ const Map<TabItem, String> drawerName = {
 
 const Map<TabItem, String> tabName = {
   TabItem.signIn: 'Sign In To Your Account',
+  TabItem.dashboard: 'Dashboard Demo',
   TabItem.expansion: 'Expansion Tile Demo',
   TabItem.deviceInfo: 'Device Info Demo',
   TabItem.cryptography: 'Cryptography Demo',
@@ -41,6 +44,7 @@ const Map<TabItem, String> tabName = {
 
 const Map<TabItem, IconData> tabIcons = {
   TabItem.signIn: Icons.vpn_key_sharp,
+  TabItem.dashboard: Icons.dashboard,
   TabItem.expansion: Icons.document_scanner_outlined,
   TabItem.deviceInfo: Icons.phone_android_sharp,
   TabItem.cryptography: Icons.enhanced_encryption_outlined,

@@ -14,6 +14,7 @@ import 'package:security_test/models/security_model.dart';
 import 'package:security_test/ui/account_summary.dart';
 import 'package:security_test/ui/authentication_screen.dart';
 import 'package:security_test/ui/cryptography_screen.dart';
+import 'package:security_test/ui/dashboard.dart';
 import 'package:security_test/ui/device_info_screen.dart';
 import 'package:security_test/ui/expansion_screen.dart';
 import 'package:security_test/ui/location.dart';
@@ -30,7 +31,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends BaseStateful<HomeScreen>
+    with WidgetsBindingObserver {
   SecurityModel _securityModel = SecurityModel();
   TabItem _currentTab = TabItem.expansion;
   String title = tabName[TabItem.expansion];
@@ -50,7 +52,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
       if (state == AppLifecycleState.paused) {
         _countdownTimer = SessionTimer.start(context);
       } else if (state == AppLifecycleState.resumed) {
-        if (_countdownTimer != null && _countdownTimer.remaining > Duration(seconds: 0)) {
+        if (_countdownTimer != null &&
+            _countdownTimer.remaining > Duration(seconds: 0)) {
           print("AppLifeCycleState timer didn't complete");
           //Let user continue using the app
         } else {
@@ -72,6 +75,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
         onInit: init,
         selectedTab: selectTab,
       ),
+      Dashboard(),
       ExpansionScreen(),
       DeviceInfoScreen(),
       CryptographyScreen(),
@@ -96,8 +100,10 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
   }
 
   Future init() async {
-    final secureEmail = await UserSecureStorage.getSecureData(Constants.skEmail);
-    final securePassword = await UserSecureStorage.getSecureData(Constants.skPassword);
+    final secureEmail =
+        await UserSecureStorage.getSecureData(Constants.skEmail);
+    final securePassword =
+        await UserSecureStorage.getSecureData(Constants.skPassword);
     if (secureEmail.isNotNullOrEmpty && securePassword.isNotNullOrEmpty) {
       setState(() {
         email = secureEmail;
@@ -203,64 +209,81 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                         tabItem: TabItem.signIn,
                         currentTab: _currentTab,
                         onTap: () {
-                          selectTab(TabItem.signIn, isChangeTab: false, hasUser: isAuthenticate);
+                          selectTab(TabItem.signIn,
+                              isChangeTab: false, hasUser: isAuthenticate);
                         },
                       )
                     : Container(),
                 DrawerList(
+                  tabItem: TabItem.dashboard,
+                  currentTab: _currentTab,
+                  onTap: () {
+                    selectTab(TabItem.dashboard,
+                        isChangeTab: true, hasUser: isAuthenticate);
+                  },
+                ),
+                DrawerList(
                   tabItem: TabItem.expansion,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.expansion, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.expansion,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.deviceInfo,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.deviceInfo, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.deviceInfo,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.cryptography,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.cryptography, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.cryptography,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.pageOne,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.pageOne, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.pageOne,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.local,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.local, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.local,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.tnc,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.tnc, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.tnc,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.paymentHistory,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.paymentHistory, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.paymentHistory,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 DrawerList(
                   tabItem: TabItem.accountSummary,
                   currentTab: _currentTab,
                   onTap: () {
-                    selectTab(TabItem.accountSummary, isChangeTab: true, hasUser: isAuthenticate);
+                    selectTab(TabItem.accountSummary,
+                        isChangeTab: true, hasUser: isAuthenticate);
                   },
                 ),
                 isAuthenticate
@@ -269,7 +292,8 @@ class _HomeScreenState extends BaseStateful<HomeScreen> with WidgetsBindingObser
                         currentTab: _currentTab,
                         onTap: () {
                           logout();
-                          selectTab(TabItem.signIn, isChangeTab: true, hasUser: isAuthenticate);
+                          selectTab(TabItem.signIn,
+                              isChangeTab: true, hasUser: isAuthenticate);
                         },
                       )
                     : Container(),
