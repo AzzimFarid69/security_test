@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:security_test/common/base/MyAppGlobalData.dart';
 import 'package:security_test/common/utils/constant.dart';
+import 'package:security_test/common/utils/global_data.dart';
 import 'package:security_test/models/access_peremission.dart';
 import 'package:security_test/models/home_page_grid_view_list.dart';
 
@@ -28,39 +29,42 @@ class MenuAccessControl {
   static void navigationMenuControl() {}
 
   static List<HomePageGridViewListData> dashboardMenuControl() {
-    List<AccessPermission> upl = Constants.getPermission();
+    List<String> upl =
+        MyGlobalData.accessPermission = Constants.getPermission();
+
+    print('upl: $upl');
 
     List<HomePageGridViewListData> dataList = [];
 
     if (upl.isNotEmpty && upl.length > 0) {
       for (var i = 0; i < upl.length; i++) {
-        if (upl[i].permission.contains(GRANT_ACCOUNT_SUMMARY)) {
+        if (upl[i].contains(GRANT_ACCOUNT_SUMMARY)) {
           dataList.add(HomePageGridViewListData(
               id: Constants.DASHBOARD_ACCOUNT_SUMMARY,
               image: 1000,
               text: 'Account Summary'));
         }
 
-        if (upl[i].permission.contains(GRANT_FUND_TRANSFER) ||
-            upl[i].permission.contains(GRANT_FUND_TRANSFER_FAVOURITE) ||
-            upl[i].permission.contains(GRANT_INTERBANK_FUND_TRANSFER)) {
+        if (upl[i].contains(GRANT_FUND_TRANSFER) ||
+            upl[i].contains(GRANT_FUND_TRANSFER_FAVOURITE) ||
+            upl[i].contains(GRANT_INTERBANK_FUND_TRANSFER)) {
           dataList.add(HomePageGridViewListData(
               id: Constants.DASHBOARD_TRANSFER_SERVICE,
               image: 1000,
               text: 'Fund Transfer'));
         }
 
-        if (upl[i].permission.contains(GRANT_BILL_PAYMENT) ||
-            upl[i].permission.contains(GRANT_BILL_PAYMENT_HISTORY) ||
-            upl[i].permission.contains(GRANT_LOAN_REPAYMENT)) {
+        if (upl[i].contains(GRANT_BILL_PAYMENT) ||
+            upl[i].contains(GRANT_BILL_PAYMENT_HISTORY) ||
+            upl[i].contains(GRANT_LOAN_REPAYMENT)) {
           dataList.add(HomePageGridViewListData(
               id: Constants.DASHBOARD_PAYMENT_SERVICE,
               image: 1000,
               text: 'Payment'));
         }
 
-        if (upl[i].permission.contains(GRANT_GROUP_TASK_LIST) ||
-            upl[i].permission.contains(GRANT_MY_TASK_LIST)) {
+        if (upl[i].contains(GRANT_GROUP_TASK_LIST) ||
+            upl[i].contains(GRANT_MY_TASK_LIST)) {
           dataList.add(HomePageGridViewListData(
               id: Constants.DASHBOARD_TASK_LIST, image: 1000, text: 'Task'));
         }

@@ -278,11 +278,11 @@ class Constants {
           '300000.20',
         ),
       ];
-  static List<AccessPermission> getPermission() => [
-        AccessPermission('/bib/accountsummary/list'),
-        AccessPermission('/bib/fundtransfer/quicktransfer/select'),
-        AccessPermission('/bib/billpayment/select'),
-        AccessPermission('/bib/workflow/group/layout'),
+  static List<String> getPermission() => [
+        '/bib/accountsummary/list',
+        '/bib/fundtransfer/quicktransfer/select',
+        '/bib/billpayment/select',
+        '/bib/workflow/group/layout',
       ];
 
   // Value Formatting //

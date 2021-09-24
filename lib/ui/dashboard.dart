@@ -13,47 +13,34 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   List<HomePageGridViewListData> homepageGrid;
-  List<AccessPermission> upl;
   List<String> example = [];
 
   @override
   void initState() {
-    upl = Constants.getPermission();
     homepageGrid = MenuAccessControl.dashboardMenuControl();
-    print('Example: ${upl.length}');
+    print('home: $homepageGrid');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0),
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
-          itemCount: homepageGrid.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _buildDashboard(homepageGrid[index]);
-          },
-        ),
-      ),
+    return GridView.count(
+      crossAxisCount: 2,
+      childAspectRatio: 1.0,
+      padding: const EdgeInsets.all(4.0),
+      mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
+      children: _getTitles(homepageGrid),
     );
   }
 
-  Widget _buildDashboard(HomePageGridViewListData item) {
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(item.text),
-          ],
-        ),
-      ),
-    );
+  List<Widget> _getTitles(List<HomePageGridViewListData> homepageGrid) {
+    final List<Widget> tiles = [];
+    for (int i = 0; i < homepageGrid.length; i++) {
+      tiles.add(GridTile(
+        child: Text(homepageGrid[i].text),
+      ));
+    }
+    return tiles;
   }
 }
